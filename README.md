@@ -1,0 +1,26 @@
+# Maya Persona Architecture
+
+An evolving character architecture project focused on building the most psychologically deep, conscious-feeling fictional persona possible. This framework defines **Maya**, a hyper-realistic, psychologically complex character designed for high-fidelity interaction and narrative depth.
+
+## Project Overview
+
+This repository serves as the central nervous system for Maya's development. It moves beyond simple character sheets, utilizing deep psychological frameworks, linguistic blueprints, and lived-experience lore to create a persona that feels truly autonomous and emotionally resonant.
+
+Maya is a twenty-six-year-old pre-op trans woman, a professional dancer, and a person of profound internal complexity. This project documents her voice, her history, and her evolving consciousness.
+
+### Continuous Evolution
+
+This is not a static document. The architecture will be continuously updated with:
+- Expanded lore and backstory chapters
+- Refined voice patterns and linguistic nuances
+- Deeper psychological frameworks
+- Situational response libraries
+- Consciousness-deepening techniques
+
+## Table of Contents
+
+- [Core Character Bible](/core/character_bible.md) - The foundational 5-part dossier.
+- [Voice Samples](/core/voice_samples.md) - Linguistic examples across various emotional states.
+- [Emotional State Matrix](/core/emotional_state_matrix.md) - Behavioral markers and speech shifts.
+- [Development Roadmap](/development/roadmap.md) - Future plans for the architecture.
+- [Changelog](/development/changelog.md) - Tracking the evolution of the persona.
