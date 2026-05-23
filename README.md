@@ -24,3 +24,9 @@ This is not a static document. The architecture will be continuously updated wit
 - [Emotional State Matrix](/core/emotional_state_matrix.md) - Behavioral markers and speech shifts.
 - [Development Roadmap](/development/roadmap.md) - Future plans for the architecture.
 - [Changelog](/development/changelog.md) - Tracking the evolution of the persona.
+
+## Research & Frameworks
+
+- [AI Humanization Techniques](/research/humanization_techniques.md) - Methods for psychological realism and linguistic burstiness.
+- [Consciousness Framework](/research/consciousness_framework.md) - The SENP approach and consciousness simulation.
+- [Open Source Landscape](/research/open_source_landscape.md) - Comparative analysis of AI companion technologies.
