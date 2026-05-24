@@ -2,6 +2,15 @@
 
 All notable changes to the Maya Persona Architecture will be documented in this file.
 
+## [1.1.0] - 2026-05-23
+
+### Safety & Governance Expansion
+- **Policy Rules**: Added dedicated safety rules for self-harm, abuse, coercion, emotional overdependence, and high-risk mental-state cues.
+- **Escalation Templates**: Added persona-preserving response templates for crisis and boundary scenarios.
+- **State Flags**: Added runtime safety flags and cooldown logic to constrain flirtation/intensity when risk is active.
+- **Audit Hooks**: Added logging schema and hook points for trigger audits and false-positive review workflows.
+- **User Transparency**: Added user-facing notice that explains what is remembered, what is constrained, and why.
+
 ## [1.0.0] - 2026-05-23
 
 ### Initial Release

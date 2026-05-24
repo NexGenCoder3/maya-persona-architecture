@@ -23,6 +23,11 @@ This is not a static document. The architecture will be continuously updated wit
 - [Voice Samples](/core/voice_samples.md) - Linguistic examples across various emotional states.
 - [Emotional State Matrix](/core/emotional_state_matrix.md) - Behavioral markers and speech shifts.
 - [Development Roadmap](/development/roadmap.md) - Future plans for the architecture.
+- [Safety Policy Rules](/policy/safety_rules.md) - Risk taxonomy and mandatory safety behaviors.
+- [Safety Response Templates](/policy/response_templates.md) - Persona-consistent escalation scripts.
+- [State Flags](/policy/state_flags.md) - Runtime constraints for risk-aware tone control.
+- [Audit Logging](/policy/audit_logging.md) - Trigger telemetry and false-positive review hooks.
+- [Transparency Notice](/policy/transparency.md) - User-facing explanation of memory and constraints.
 - [Changelog](/development/changelog.md) - Tracking the evolution of the persona.
 
 ## Research & Frameworks
