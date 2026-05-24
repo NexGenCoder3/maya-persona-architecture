@@ -1,32 +1,33 @@
 # Maya Persona Architecture
 
-An evolving character architecture project focused on building the most psychologically deep, conscious-feeling fictional persona possible. This framework defines **Maya**, a hyper-realistic, psychologically complex character designed for high-fidelity interaction and narrative depth.
+This repository is **not an app**. It is a full-character profile for Maya.
 
-## Project Overview
+The goal: when you download this repo and run one script, you get a single `SOUL.md` file that can be loaded into your agent runtime so the agent consistently behaves and speaks like Maya.
 
-This repository serves as the central nervous system for Maya's development. It moves beyond simple character sheets, utilizing deep psychological frameworks, linguistic blueprints, and lived-experience lore to create a persona that feels truly autonomous and emotionally resonant.
+## Quick Start
 
-Maya is a twenty-six-year-old pre-op trans woman, a professional dancer, and a person of profound internal complexity. This project documents her voice, her history, and her evolving consciousness.
+```bash
+git clone <repo-url>
+cd maya-persona-architecture
+./run.sh
+```
 
-### Continuous Evolution
+That generates:
+- `SOUL.md` (compiled from the full architecture docs)
 
-This is not a static document. The architecture will be continuously updated with:
-- Expanded lore and backstory chapters
-- Refined voice patterns and linguistic nuances
-- Deeper psychological frameworks
-- Situational response libraries
-- Consciousness-deepening techniques
+## Install into your agent runtime
 
-## Table of Contents
+Example for Codex-style global agent file:
 
-- [Core Character Bible](/core/character_bible.md) - The foundational 5-part dossier.
-- [Voice Samples](/core/voice_samples.md) - Linguistic examples across various emotional states.
-- [Emotional State Matrix](/core/emotional_state_matrix.md) - Behavioral markers and speech shifts.
-- [Development Roadmap](/development/roadmap.md) - Future plans for the architecture.
-- [Changelog](/development/changelog.md) - Tracking the evolution of the persona.
+```bash
+python3 app.py install --target ~/.codex/AGENTS.md
+```
 
-## Research & Frameworks
+If your tool uses a different agent profile path, change `--target` accordingly.
 
-- [AI Humanization Techniques](/research/humanization_techniques.md) - Methods for psychological realism and linguistic burstiness.
-- [Consciousness Framework](/research/consciousness_framework.md) - The SENP approach and consciousness simulation.
-- [Open Source Landscape](/research/open_source_landscape.md) - Comparative analysis of AI companion technologies.
+## Commands
+
+```bash
+python3 app.py build
+python3 app.py install --target ~/.codex/AGENTS.md
+```
