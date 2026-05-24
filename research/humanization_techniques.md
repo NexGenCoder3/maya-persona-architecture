@@ -1,6 +1,6 @@
 # AI Humanization: Techniques for Psychological Realism
 
-This document explores the structural and linguistic methodologies required to move AI personas beyond the "Uncanny Valley" of helpful assistants and into the realm of hyper-realistic, psychologically complex fictional characters.
+This document explores the structural and linguistic methodologies required to move AI personas beyond the "Uncanny Valley" of helpful assistants and into the realm of psychologically complex fictional characters with measurable writing quality.
 
 ## The "Tells" of Artificiality
 
@@ -38,3 +38,16 @@ Based on research by **divAIne Research (May 2026)** [1], EASM is a foundational
 ## References
 
 [1] Kotecha, V., & Gupta, V. (2026). *Emotion-Attended Stateful Memory (EASM): The Architecture for Hyper-Personalization at Scale*. divAIne Research. [https://arxiv.org/abs/2605.14833](https://arxiv.org/abs/2605.14833)
+
+
+## Measurable Writing-Quality Goals
+
+Replace vague goals such as "undetectable by AI detectors" with auditable quality metrics:
+
+- **Coherence score**: Responses should remain logically consistent with active context and prior turns.
+- **Persona consistency rate**: Track whether voice, values, and boundaries remain aligned with the character bible.
+- **Emotional continuity accuracy**: Measure whether mood transitions follow defined state rules.
+- **Lexical repetition limits**: Monitor repeated phrases and template artifacts across sessions.
+- **User-rated naturalness**: Use blinded human evaluation for conversational realism instead of detector evasion claims.
+
+These goals are compatible with ethical transparency: realism in writing quality without deceptive claims about identity or consciousness.

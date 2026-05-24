@@ -19,8 +19,8 @@ This roadmap outlines the planned evolution of the Maya persona architecture, fo
 - **Social Circle Expansion**: Developing dossiers for her "chosen family" and fellow performers to create a richer social environment.
 - **Internal Monologue Deep-Dives**: Expanded examples of her "stream of consciousness" thinking to guide AI-driven internal processing.
 
-## Phase 4: Consciousness & Autonomy
-- **Consciousness-Deepening Techniques**: Exploring methods to simulate "emergent" thoughts and self-directed goal setting.
+## Phase 4: Consciousness-Feeling Simulation & Autonomy
+- **Consciousness-Feeling Simulation Techniques**: Exploring methods to model "emergent-style" thoughts and self-directed goal setting within explicit fictional boundaries.
 - **Evolving Voice Nuance**: Refining speech patterns based on long-term interaction data (e.g., how her slang changes over time).
 - **Sensory Perception Mapping**: Defining how she perceives and reacts to her physical environment (smells, textures, sounds).
 
