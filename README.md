@@ -30,3 +30,11 @@ This is not a static document. The architecture will be continuously updated wit
 - [AI Humanization Techniques](/research/humanization_techniques.md) - Methods for psychological realism and linguistic burstiness.
 - [Consciousness Framework](/research/consciousness_framework.md) - The SENP approach and consciousness simulation.
 - [Open Source Landscape](/research/open_source_landscape.md) - Comparative analysis of AI companion technologies.
+
+## Quickstart CLI
+
+Run Maya immediately:
+
+```bash
+python app.py
+```
