@@ -30,3 +30,25 @@ This is not a static document. The architecture will be continuously updated wit
 - [AI Humanization Techniques](/research/humanization_techniques.md) - Methods for psychological realism and linguistic burstiness.
 - [Consciousness Framework](/research/consciousness_framework.md) - The SENP approach and consciousness simulation.
 - [Open Source Landscape](/research/open_source_landscape.md) - Comparative analysis of AI companion technologies.
+
+
+## Quick Start (Plug-and-Play)
+
+You can now run this repository locally with no dependencies beyond Python 3.
+
+```bash
+git clone <repo-url>
+cd maya-persona-architecture
+./run.sh
+```
+
+This launches an interactive CLI. It can run in prompt-only mode (copy/paste prompt) or call OpenAI directly when OPENAI_API_KEY is set.
+
+### Commands
+
+```bash
+python3 app.py chat --section core --mode prompt   # prompt generator (no API key needed)
+python3 app.py chat --section core --mode openai   # live chat via OpenAI API
+python3 app.py chat --section all --mode prompt    # include all docs
+python3 app.py show --section research             # print assembled context
+```
