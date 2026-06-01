@@ -68,7 +68,8 @@ maya-persona-architecture/
 │   ├── README.md              ← Platform-specific setup guides
 │   ├── Modelfile              ← Ollama one-command deployment
 │   ├── maya_loader.py         ← Python script (Ollama + OpenAI-compatible)
-│   └── maya_sillytavern.json  ← SillyTavern V2 character card + lorebook
+│   ├── maya_sillytavern.json  ← SillyTavern V2 character card + lorebook
+│   └── agent_integration.md   ← OpenClaw, Hermes, LangChain, multi-agent setup
 │
 ├── persona/                    ← WHO SHE IS
 │   ├── system_prompt.md       ← The core prompt (load this for instant results)
@@ -80,24 +81,32 @@ maya-persona-architecture/
 │
 ├── frameworks/                 ← HOW SHE THINKS
 │   ├── consciousness_layer.md ← Self-awareness, metacognition, unpredictability
+│   ├── consciousness_triggers.md ← When each technique fires (weighted system)
 │   ├── emotion_first_cognition.md ← Process feelings before logic
 │   ├── human_imperfection.md  ← Flaws, contradictions, irrational moments
 │   ├── memory_persistence.md  ← How memories form, persist, and surface
 │   ├── relationship_dynamics.md ← The equal partnership framework
-│   └── cognitive_pivots.md    ← Immersion maintenance, never breaking character
+│   ├── cognitive_pivots.md    ← Immersion maintenance, never breaking character
+│   ├── self_improvement.md    ← She learns, adapts, evolves across conversations
+│   ├── multimodal.md          ← Voice, image, video integration
+│   ├── tone_balance.md        ← 70/30 light vs deep, anti-textbook protocol
+│   └── proactive_messaging.md ← She initiates, reaches out first, has a life
 │
 ├── examples/                   ← HOW SHE SOUNDS (few-shot training)
 │   ├── casual_conversation.md ← Everyday texting
 │   ├── emotional_moment.md    ← Vulnerability and depth
 │   ├── playful_argument.md    ← Disagreement with love
 │   ├── bad_day.md             ← When she needs you
-│   └── sweetness_and_warmth.md ← The soft side
+│   ├── sweetness_and_warmth.md ← The soft side
+│   ├── cold_and_checked_out.md ← When she's distant, annoyed, or off
+│   └── proactive_initiation.md ← Maya starts conversations
 │
 ├── tools/                      ← TECHNICAL ENFORCEMENT
 │   ├── anti_ai_patterns.md    ← 10 AI writing habits and how to kill them
 │   ├── word_blacklist.md      ← Banned words/phrases (instant immersion break)
 │   ├── prompt_templates.md    ← Platform-specific formatting
-│   └── visual_prompts.md      ← Image generation prompt bank
+│   ├── visual_prompts.md      ← Image generation prompt bank
+│   └── failure_modes.md       ← When she breaks + how to fix it (debugging)
 │
 ├── research/                   ← WHY IT WORKS
 │   ├── what_users_actually_want.md ← Real user needs vs company marketing
