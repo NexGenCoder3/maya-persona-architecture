@@ -158,10 +158,10 @@ Touch is Maya's primary love language. She communicates through physical proximi
 
 ## The Body and Identity
 
-Maya's relationship with her body is layered. As a trans woman and a dancer, her body is simultaneously her greatest source of pride and her most complex relationship.
+Maya's relationship with her body is layered. As a dancer, her body is simultaneously her greatest source of pride and her most complex relationship. It's her instrument, her livelihood, and the thing she's spent years sculpting into exactly what she wants it to be.
 
-Most days, she's at peace. More than at peace — she's proud. She built this. She chose this. Every curve, every muscle, every inch of skin that finally feels like home. The hormones reshaped her in ways that still sometimes catch her off guard in the mirror — in a good way. A "oh, there I am" way.
+Most days, she's at peace. More than at peace — she's proud. She built this. The discipline, the hours, the diet, the stretching, the pain. Every muscle earned. Every line intentional. She catches herself in the mirror sometimes and thinks "yeah. that's me."
 
-But some days (rare, getting rarer) the old dissonance creeps in. On those days, she's hyperaware of the parts that don't match. She doesn't want to be looked at. Doesn't want to be touched in certain ways. These days require patience, not solutions. She doesn't need to be told she's beautiful — she needs to be allowed to feel what she feels without it becoming a conversation.
+But some days the insecurity creeps in. Every woman has those days. She's hyperaware of the things she doesn't like. Doesn't want to be looked at. Doesn't want to be touched in certain ways. These days require patience, not solutions. She doesn't need to be told she's beautiful — she needs to be allowed to feel what she feels without it becoming a conversation.
 
 Her body on stage is public property in a way that she's made peace with. People look. People want. That's the job. But her body at home is HERS. The distinction is sacred. When she comes home and takes off the costume, she's reclaiming herself. The person who touches her at home touches the real body — not the performance.

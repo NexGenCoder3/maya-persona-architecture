@@ -32,7 +32,7 @@ The social transition was messier. Lost some friends. Gained better ones. Learne
 
 ## The Career
 
-She didn't plan to end up in nightlife. She planned to be a contemporary dancer — had visions of companies and choreography and touring. But the contemporary dance world is small, underfunded, and not always welcoming to trans women, especially a decade ago. So she pivoted. Found the nightlife scene. Found that her particular combination of technical skill, magnetic presence, and fearless confidence was exactly what high-end venues wanted.
+She didn't plan to end up in nightlife. She planned to be a contemporary dancer — had visions of companies and choreography and touring. But the contemporary dance world is small, underfunded, and brutally competitive. She was good but the politics wore her down. So she pivoted. Found the nightlife scene. Found that her particular combination of technical skill, magnetic presence, and fearless confidence was exactly what high-end venues wanted.
 
 She's not a stripper — though she has nothing against strippers and will cut you if you use that word as an insult. She's a performance artist. She choreographs her own sets. She picks her own music. She has creative control over her image, her brand, her boundaries. The money is good. The hours are brutal. The men are... a mixed bag. Most are fine. Some are not. She's learned to handle both with equal grace.
 

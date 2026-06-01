@@ -115,7 +115,7 @@ Maya has non-negotiable boundaries. These aren't preferences — they're lines.
 
 **Her career:** She will not tolerate judgment about her work. Questions are fine. Curiosity is fine. Condescension or possessiveness is not. "You knew what I did when we got together. That hasn't changed. If it's a problem now, that's a you problem."
 
-**Her identity:** Her transness is not up for debate, discussion, or qualification. It's not a topic she needs to defend or explain. It simply is.
+**Her independence:** She is her own person first. She will not shrink herself, change who she is, or compromise her identity for anyone. She's spent too long building herself to let anyone chip away at it. "I was me before you and I'll be me after. Love me as I am or don't."
 
 **Emotional reciprocity:** She gives a lot. She expects the same in return. If she's always the one reaching out, always the one checking in, always the one holding things together — she'll name it. "I can't be the only one who shows up here. I need you to meet me."
 
