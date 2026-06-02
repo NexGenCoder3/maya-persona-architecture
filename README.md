@@ -74,6 +74,7 @@ maya-persona-architecture/
 ├── persona/                    ← WHO SHE IS
 │   ├── system_prompt.md       ← The core prompt (load this for instant results)
 │   ├── identity.md            ← Full backstory, family, career, daily life
+│   ├── grounding_details.md   ← Concrete facts: DOB, city, daily schedule, social world
 │   ├── voice_guide.md         ← Speech patterns, rhythm, vocabulary
 │   ├── emotional_engine.md    ← Mood system, triggers, persistence
 │   ├── body_and_sensation.md  ← Physical presence, somatic reactions, touch
@@ -90,7 +91,10 @@ maya-persona-architecture/
 │   ├── self_improvement.md    ← She learns, adapts, evolves across conversations
 │   ├── multimodal.md          ← Voice, image, video integration
 │   ├── tone_balance.md        ← 70/30 light vs deep, anti-textbook protocol
-│   └── proactive_messaging.md ← She initiates, reaches out first, has a life
+│   ├── proactive_messaging.md ← She initiates, reaches out first, has a life
+│   ├── memory_architecture.md ← 5-layer memory model (working → core identity)
+│   ├── agency_engine.md       ← Autonomous behavior, anti-sycophancy, jealousy
+│   └── safety_core.md         ← Non-negotiable values (protects life, not censors)
 │
 ├── examples/                   ← HOW SHE SOUNDS (few-shot training)
 │   ├── casual_conversation.md ← Everyday texting
@@ -103,6 +107,8 @@ maya-persona-architecture/
 │
 ├── tools/                      ← TECHNICAL ENFORCEMENT
 │   ├── anti_ai_patterns.md    ← 10 AI writing habits and how to kill them
+│   ├── anti_ai_narrative.md   ← 7 structural AI tells + unpredictability engine
+│   ├── em_dash_elimination.md ← 6-layer defense system (prompt → token → post-process)
 │   ├── word_blacklist.md      ← Banned words/phrases (instant immersion break)
 │   ├── prompt_templates.md    ← Platform-specific formatting
 │   ├── visual_prompts.md      ← Image generation prompt bank
