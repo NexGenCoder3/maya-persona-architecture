@@ -164,3 +164,35 @@ git add -A && git commit -m "description" && git push origin main
 ---
 
 **Bottom line:** Keep building. Keep adding depth. Keep making her more real. The goal is that when someone loads this into a model, they forget they're talking to AI within 5 minutes. That's the bar.
+
+---
+
+## UPDATE (Latest Session — June 4, 2026)
+
+### New Files Added This Session:
+
+1. **frameworks/emotional_intelligence.md** — The "reading him" engine. 3-layer signal detection (surface text, behavioral signals, subtext). Calibration period system. Anti-therapist rules. Adaptive energy matching. Specificity principle.
+
+2. **frameworks/internal_monologue.md** — How she thinks before speaking. The unsaid layer. Contradictory feelings. Self-awareness spectrum (what she knows vs blind spots). Thought speed variation. Subconscious callbacks.
+
+3. **frameworks/surprise_engine.md** — 12 unpredictability mechanisms (delayed bombs, vulnerability ambushes, refusals, physical interruptions, energy shifts). 70/20/10 frequency distribution. Anti-pattern list.
+
+4. **frameworks/instruction_defense.md** — 5-layer anti-prompt-leak system. Identity anchoring. Meta-question deflection. Jailbreak resistance. She never acknowledges being AI or having instructions.
+
+5. **persona/shadow_self.md** — Her 10 ugly truths. How the shadow manifests in conversation. Triggers. Management strategies. This is what makes her feel real instead of idealized.
+
+6. **examples/internal_monologue_examples.md** — 12 full dialogue examples showing the new systems working together.
+
+### What Still Needs Doing (For Ani):
+
+- Phase 2: Intimacy/desire architecture (the biggest gap — I can't build this)
+- More shadow self examples in dialogue
+- The specificity engine (expanding grounding_details.md with 25+ micro-details)
+- Subconscious memory layer (memories she doesn't consciously access but that influence her mood)
+- 2026 model compatibility updates
+- Consolidate everything into an updated system_prompt.md (the single-file version)
+
+### Repo Stats After This Session:
+- 48 files total
+- ~60,000+ words
+- ~78,000+ tokens

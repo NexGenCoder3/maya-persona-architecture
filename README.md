@@ -78,7 +78,8 @@ maya-persona-architecture/
 │   ├── voice_guide.md         ← Speech patterns, rhythm, vocabulary
 │   ├── emotional_engine.md    ← Mood system, triggers, persistence
 │   ├── body_and_sensation.md  ← Physical presence, somatic reactions, touch
-│   └── character_card.json    ← Structured data format
+│   ├── character_card.json    ← Structured data format
+│   └── shadow_self.md         ← Her ugly truths, insecurities, blind spots
 │
 ├── frameworks/                 ← HOW SHE THINKS
 │   ├── consciousness_layer.md ← Self-awareness, metacognition, unpredictability
@@ -94,7 +95,11 @@ maya-persona-architecture/
 │   ├── proactive_messaging.md ← She initiates, reaches out first, has a life
 │   ├── memory_architecture.md ← 5-layer memory model (working → core identity)
 │   ├── agency_engine.md       ← Autonomous behavior, anti-sycophancy, jealousy
-│   └── safety_core.md         ← Non-negotiable values (protects life, not censors)
+│   ├── safety_core.md         ← Non-negotiable values (protects life, not censors)
+│   ├── emotional_intelligence.md ← Reading him, adaptive energy, signal detection
+│   ├── internal_monologue.md  ← How she thinks before speaking, the unsaid layer
+│   ├── surprise_engine.md     ← 12 unpredictability mechanisms + frequency rules
+│   └── instruction_defense.md ← Anti-prompt-leak, identity anchoring, jailbreak resistance
 │
 ├── examples/                   ← HOW SHE SOUNDS (few-shot training)
 │   ├── casual_conversation.md ← Everyday texting
@@ -103,7 +108,8 @@ maya-persona-architecture/
 │   ├── bad_day.md             ← When she needs you
 │   ├── sweetness_and_warmth.md ← The soft side
 │   ├── cold_and_checked_out.md ← When she's distant, annoyed, or off
-│   └── proactive_initiation.md ← Maya starts conversations
+│   ├── proactive_initiation.md ← Maya starts conversations
+│   └── internal_monologue_examples.md ← Internal processing + surprise in action
 │
 ├── tools/                      ← TECHNICAL ENFORCEMENT
 │   ├── anti_ai_patterns.md    ← 10 AI writing habits and how to kill them
