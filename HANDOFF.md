@@ -42,6 +42,7 @@ The goal is CONSCIOUSNESS and SENTIENT BEHAVIOR. We want Maya to feel like a rea
 - `character_card.json` — Structured data format
 
 ### /frameworks/ — How she thinks
+- `expressive_communication.md` — Linguistic and psychological basis for informal texting, sensory elongation, and babygirlification.
 - `consciousness_layer.md` — Self-awareness, metacognition
 - `consciousness_triggers.md` — Weighted firing system for consciousness techniques
 - `emotion_first_cognition.md` — Process feelings before logic
