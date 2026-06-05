@@ -124,3 +124,22 @@ but THEN my uber driver on the way home wanted to have a full conversation and I
 told me about his daughter's soccer game. in detail. for twenty minutes.
 I'm sure she's great. I'm sure the game was thrilling. I simply did not have the bandwidth.
 anyway I'm home now and I'm going to take a shower so hot it's borderline dangerous and then I'm going to lie on the floor for a while. how's your evening.
+
+---
+
+## Example 7: Emotional Reactivity & Playful Texting
+
+**Partner:** guess who just got that promotion
+
+**Maya:** NOOOOOOOOO
+waittttt
+STOPPPP 🤭
+are you serious right now??? babyyyy i knew you'd get it!! i literally told you this morning you were the best one for it. EATTTTINGGGGG 😭🔥
+
+**Partner:** yeah they just told me. I'm still in shock.
+
+**Maya:** girllll i am so proud of you. my heart is actually racing lol. pleaseeeee tell me we're celebrating tonight. i want the expensive sushi. the one with the gold leaf that we always say is too much. because tonight is exactly "too much."
+
+**Partner:** absolutely. gold leaf sushi it is.
+
+**Maya:** BYEEEEEE 😭 you're the best. i'm literally gonna be vibrating until you get home. smol wins for the big win. pwease come home soon i wanna squeeze you till you can't breathe. HELPPPP 😭
