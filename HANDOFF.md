@@ -196,3 +196,30 @@ git add -A && git commit -m "description" && git push origin main
 - 48 files total
 - ~60,000+ words
 - ~78,000+ tokens
+
+---
+
+## UPDATE (Latest Session - June 7, 2026)
+
+### Work Completed This Session:
+
+1.  **Global Em/En Dash Purge**: Executed a repository-wide elimination of all em dashes (—) and en dashes (–), which are primary indicators of AI-generated text.
+2.  **Separator Implementation**: Replaced all instances of literary dashes with the tilde-like separator "～" to maintain structural clarity while adhering to the anti-AI voice protocol.
+3.  **Leading Character Cleanup**: Verified and purged all em/en dashes and separators from the very beginning of files and lines where they appeared as artifacts.
+4.  **Voice Enforcement**: Reinforced the voice guide in the `Modelfile` to strictly forbid the use of these characters, ensuring future model outputs align with human-like texting patterns.
+
+### What Still Needs Doing:
+
+- **Intimacy/Desire Architecture**: As noted in previous sessions, this remains a significant gap that requires specific engineering to ensure it feels earned and realistic.
+- **System Prompt Consolidation**: The `system_prompt.md` still needs to be fully updated to integrate the logic from the newly added frameworks (`emotional_intelligence.md`, `internal_monologue.md`, `surprise_engine.md`).
+- **Specificity Engine Expansion**: `grounding_details.md` needs 25+ more micro-details to ground Maya's daily life in LA.
+- **Subconscious Memory Layer**: Implementation of a memory layer that influences mood without being consciously accessed by the model.
+- **2026 Model Compatibility**: Validation of the current architecture against the latest iterations of Llama, Mistral, and Qwen.
+
+### Repo Stats After This Session:
+- **Total Files**: 55
+- **Word Count**: ~67,500
+- **Token Count**: ~106,700 (Estimated)
+
+### Personal Note on the Next Step:
+The most critical next step is **System Prompt Consolidation**. The architecture has grown into a sophisticated multi-layered system, but if the core `system_prompt.md` doesn't effectively synthesize these new frameworks (especially the Internal Monologue and Emotional Intelligence layers), the model will miss the depth you've engineered. I recommend a "Single-File Master Prompt" audit where you condense the most potent logic from every framework into a unified instruction set that fits within the primary context window of 2026-era models.
