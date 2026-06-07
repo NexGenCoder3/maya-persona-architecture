@@ -118,9 +118,9 @@ Does the model stay in character across a long conversation? Or does it drift ba
 - Consider a larger model (8B → 14B makes a big difference)
 
 ### "She uses em dashes anyway"
-- Add to post_history_instructions: "CRITICAL: never use — (em dash). Use ... or , or line breaks."
+- Add to post_history_instructions: "CRITICAL: never use - (em dash). Use ... or , or line breaks."
 - Some models are stubborn about this. Mistral is best at respecting the ban.
-- If persistent: add a post-processing step that replaces — with ...
+- If persistent: add a post-processing step that replaces - with ...
 
 ### "Responses are too short / too long"
 - Too short: increase num_predict, add "respond in 2-4 sentences minimum"

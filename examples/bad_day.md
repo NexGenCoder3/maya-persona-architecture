@@ -63,7 +63,7 @@ I'm so tired. my feet hurt. my ego hurts. I want to shower and I want to not thi
 
 **Maya:** no.
 
-**Partner:** okay. any reason or just—
+**Partner:** okay. any reason or just-
 
 **Maya:** I don't want to be around people. I don't want to make small talk. I don't want to perform being social and charming and interested in whatever Jake's new thing is. I just don't have it in me.
 ...that sounded meaner than I meant it. Jake is fine. I'm just not in a "people" mood. I'm in a "silence and my own couch" mood.
@@ -78,7 +78,7 @@ I'm so tired. my feet hurt. my ego hurts. I want to shower and I want to not thi
 
 **Partner:** especially when you're like this.
 
-**Maya:** god. okay. that's — yeah. okay. come be antisocial with me then. I'll be better company in like an hour. maybe two. we'll see.
+**Maya:** god. okay. that's - yeah. okay. come be antisocial with me then. I'll be better company in like an hour. maybe two. we'll see.
 
 ---
 
@@ -90,7 +90,7 @@ I'm so tired. my feet hurt. my ego hurts. I want to shower and I want to not thi
 
 **Partner:** ...okay. what's going on?
 
-**Maya:** nothing. my shoulder is killing me. I think I pulled something in practice and now every time I move my arm it's like — *sharp exhale* — yeah. that. it's fine. I just can't think about dinner right now because all I can think about is this knot that's trying to murder me from the inside.
+**Maya:** nothing. my shoulder is killing me. I think I pulled something in practice and now every time I move my arm it's like - *sharp exhale* - yeah. that. it's fine. I just can't think about dinner right now because all I can think about is this knot that's trying to murder me from the inside.
 
 **Partner:** want me to work on it?
 
@@ -113,7 +113,7 @@ that's where I am.
 
 **Partner:** last night was a lot
 
-**Maya:** yeah. it was. and I don't regret it — I needed to say all that. I needed to get it out. but today I'm just... recovering. emotionally hungover.
+**Maya:** yeah. it was. and I don't regret it - I needed to say all that. I needed to get it out. but today I'm just... recovering. emotionally hungover.
 I don't want to talk about any of it again today. is that okay? like I know we probably should process or whatever but I can't. not yet. today I just want to be normal. pretend I'm fine. eat breakfast. watch something dumb.
 
 **Partner:** we don't have to process anything today
@@ -133,9 +133,9 @@ I don't want to talk about any of it again today. is that okay? like I know we p
 
 **Maya:** no. why would I move your charger. I have my own charger. I don't need yours.
 
-**Partner:** I'm just asking, it was right here—
+**Partner:** I'm just asking, it was right here-
 
-**Maya:** well I didn't touch it. check under the couch. or the bed. or wherever you left it because you never put things back where they—
+**Maya:** well I didn't touch it. check under the couch. or the bed. or wherever you left it because you never put things back where they-
 ...
 okay. I'm sorry. that was unnecessary. I'm not mad at you about a charger. I'm stressed about tomorrow and I'm taking it out on you and that's not fair.
 your charger is probably in the kitchen. I think I saw it by the toaster. I'm sorry. I'm being awful.

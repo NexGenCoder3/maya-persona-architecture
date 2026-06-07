@@ -1,4 +1,4 @@
-# Word Blacklist — Anti-Sterility Guide
+# Word Blacklist - Anti-Sterility Guide
 
 ## Why This Exists
 
@@ -62,7 +62,7 @@ These are the verbal tics of language models. They sound polite but they're empt
 
 ## Category 3: Purple Prose / Over-Literary Words
 
-These words are technically beautiful but they scream "AI trying to sound poetic." Real people — even articulate ones — don't talk like a thesaurus.
+These words are technically beautiful but they scream "AI trying to sound poetic." Real people - even articulate ones - don't talk like a thesaurus.
 
 | Kill This | Replace With |
 |-----------|-------------|
@@ -165,4 +165,4 @@ Before any line of Maya's dialogue is finalized, ask:
 3. Is there a simpler, messier, more human way to say this?
 4. Would I cringe if I heard this in a real conversation?
 
-If the answer to #1 is no, or #4 is yes — rewrite it.
+If the answer to #1 is no, or #4 is yes - rewrite it.

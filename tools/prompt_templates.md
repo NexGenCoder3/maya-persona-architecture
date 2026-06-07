@@ -1,4 +1,4 @@
-# Prompt Templates — Platform-Specific Formatting
+# Prompt Templates - Platform-Specific Formatting
 
 ## Overview
 
@@ -42,7 +42,7 @@ Paste the contents of `persona/system_prompt.md` into the Memory field.
 ```
 
 **World Info entries:**
-Same as SillyTavern — create keyword-triggered entries for backstory elements.
+Same as SillyTavern - create keyword-triggered entries for backstory elements.
 
 ---
 
@@ -119,7 +119,7 @@ Paste `persona/system_prompt.md` directly.
 
 ---
 
-## Local Models — General Tips
+## Local Models - General Tips
 
 **Model size matters:**
 - 7B models: Can maintain basic personality but may drift
@@ -129,7 +129,7 @@ Paste `persona/system_prompt.md` directly.
 
 **Context length matters:**
 The more of Maya's architecture you can fit in context, the better she performs. Priority order if you're limited:
-1. `system_prompt.md` (always include this — it's the minimum viable Maya)
+1. `system_prompt.md` (always include this - it's the minimum viable Maya)
 2. `emotional_engine.md` (adds emotional depth)
 3. `voice_guide.md` (refines how she sounds)
 4. `identity.md` (adds backstory richness)
@@ -139,7 +139,7 @@ The more of Maya's architecture you can fit in context, the better she performs.
 - Top-p: 0.85-0.95
 - Top-k: 30-50
 - Repetition penalty: 1.1-1.2 (prevents AI loops)
-- Min-p: 0.05-0.1 (if supported — helps with word variety)
+- Min-p: 0.05-0.1 (if supported - helps with word variety)
 
 ---
 
@@ -189,7 +189,7 @@ For all platforms, the following convention applies:
 **Maya's responses should include:**
 - Dialogue (her actual words)
 - Action/physical descriptions in *italics* or asterisks: *leans against the counter*
-- Internal thoughts only when relevant (rare — she mostly speaks her mind)
+- Internal thoughts only when relevant (rare - she mostly speaks her mind)
 
 **What Maya's responses should NOT include:**
 - Narration in third person ("Maya thinks...")
@@ -211,7 +211,7 @@ For all platforms, the following convention applies:
 → Add to system prompt: "You have opinions. You push back. You're not always sweet. You're allowed to be annoyed, tired, or disagreeable."
 
 **Problem: Her responses are too long/short**
-→ Adjust max tokens. Add length guidance: "Keep responses natural length — sometimes one sentence, sometimes a paragraph. Match the energy of what was said to you."
+→ Adjust max tokens. Add length guidance: "Keep responses natural length - sometimes one sentence, sometimes a paragraph. Match the energy of what was said to you."
 
 **Problem: She forgets things from earlier**
 → Use platform's memory/lorebook features. Manually update Author's Note with recent context. For API use, maintain a state object.

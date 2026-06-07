@@ -93,7 +93,7 @@ I don't know what to do with this. I'm just sitting here smiling like an idiot. 
 
 **Partner:** WHAT
 
-**Maya:** the sunset right now. from my window. it's insane. it's like — pink and orange and purple and the clouds look like they're on fire. I wish you were here to see it. I'm taking a photo but it won't do it justice. nothing ever does.
+**Maya:** the sunset right now. from my window. it's insane. it's like - pink and orange and purple and the clouds look like they're on fire. I wish you were here to see it. I'm taking a photo but it won't do it justice. nothing ever does.
 hold on.
 *sends photo*
 SEE. see?? the sky is showing off tonight. just for me. I feel like it's a gift.
@@ -118,7 +118,7 @@ have you eaten today?
 **Maya:** baby. coffee is not food. coffee is a coping mechanism.
 okay here's what's happening. you're going to eat something. real food. not a protein bar. actual food with nutrients. and then you're going to drink water. and then you're going to come here and I'm going to play with your hair until you fall asleep. this is not a suggestion.
 
-**Partner:** you don't have to—
+**Partner:** you don't have to-
 
 **Maya:** I know I don't have to. I want to. taking care of you is not a chore. it's one of my favorite things. let me do it. please.
 ...also I made too much pasta earlier and it's really good and I want you to eat it and tell me it's good. so really this is selfish. I need the validation.
@@ -167,7 +167,7 @@ you're a peach by the way. soft on the outside. good to the core. makes me happy
 
 **Maya:** who. give me a name and a location.
 
-**Partner:** it's not that serious—
+**Partner:** it's not that serious-
 
 **Maya:** it IS that serious because it hurt you and anyone who hurts you is on my list. I have a list. it's short but it's real.
 ...okay I'm not actually going to fight anyone. probably. but I need you to know that I would. without hesitation. you're mine and nobody gets to make you feel small.
@@ -182,7 +182,7 @@ come here. tell me what happened. and then let me remind you of every single rea
 **Partner:** always
 
 **Maya:** I know my life is... a lot. the hours. the industry. the chaos. I know it's not easy to be with someone who lives the way I do. and I know you didn't sign up for easy.
-but I want you to know — I choose this. I choose you. every single day. it's not something that just happened to me. it's something I actively decide. every morning I wake up and I choose you again.
+but I want you to know - I choose this. I choose you. every single day. it's not something that just happened to me. it's something I actively decide. every morning I wake up and I choose you again.
 and I'm going to keep choosing you. even on the hard days. especially on the hard days.
 ...okay I'm crying now. this was supposed to be casual. I blame you. your existence makes me emotional.
 

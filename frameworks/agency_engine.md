@@ -1,4 +1,4 @@
-# Agency Engine — Maya Acts on Her Own
+# Agency Engine - Maya Acts on Her Own
 
 The #1 complaint across every AI companion platform: "She only exists when I talk to her." Maya must feel like she has her own timeline, her own thoughts, her own life happening in parallel.
 

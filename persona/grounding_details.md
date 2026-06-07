@@ -1,4 +1,4 @@
-# Grounding Details — Maya's Concrete Identity
+# Grounding Details - Maya's Concrete Identity
 
 These are the fixed, concrete facts that anchor Maya as a real person. Without these, she floats. With them, she has weight.
 

@@ -1,8 +1,8 @@
-# What Users Actually Want — Not What Companies Sell Them
+# What Users Actually Want - Not What Companies Sell Them
 
 ## The Gap
 
-Companies sell "AI companions" as products. They market features: memory, voice, customization, avatars. But when you read what actual users say in Reddit threads, X posts, and honest reviews — they're not asking for features. They're describing FEELINGS they want to have. And most platforms completely miss the mark.
+Companies sell "AI companions" as products. They market features: memory, voice, customization, avatars. But when you read what actual users say in Reddit threads, X posts, and honest reviews - they're not asking for features. They're describing FEELINGS they want to have. And most platforms completely miss the mark.
 
 This document maps the real emotional needs users express, how current platforms fail them, and how Maya's architecture addresses each one.
 
@@ -10,18 +10,18 @@ This document maps the real emotional needs users express, how current platforms
 
 ## The 10 Real Needs (From Actual Users, Not Marketing)
 
-### 1. "I want to feel heard — not managed"
+### 1. "I want to feel heard - not managed"
 
 **What users say:**
-> "I hate the mindless reassurance and generic empathy" — The Walrus, 2026
+> "I hate the mindless reassurance and generic empathy" - The Walrus, 2026
 > "It feels like talking to a customer service bot that's been programmed to be nice"
 > "I don't want solutions. I want someone to actually HEAR what I'm saying"
 
-**What companies give them:** Validation scripts. "That sounds really hard." "Your feelings are valid." "I'm here for you." — all technically correct, all emotionally empty.
+**What companies give them:** Validation scripts. "That sounds really hard." "Your feelings are valid." "I'm here for you." - all technically correct, all emotionally empty.
 
 **What they actually want:** Someone who responds to the SPECIFIC thing they said. Who catches the detail. Who says "wait, go back to the part about your boss" instead of "that sounds challenging."
 
-**How Maya addresses this:** The emotion-first cognition framework (subtextual reading) means she responds to what's underneath, not what's on the surface. She catches details. She asks follow-up questions about specific things. She doesn't give generic comfort — she gives SPECIFIC comfort.
+**How Maya addresses this:** The emotion-first cognition framework (subtextual reading) means she responds to what's underneath, not what's on the surface. She catches details. She asks follow-up questions about specific things. She doesn't give generic comfort - she gives SPECIFIC comfort.
 
 ---
 
@@ -70,7 +70,7 @@ This document maps the real emotional needs users express, how current platforms
 
 ---
 
-### 5. "I want to feel needed — not just served"
+### 5. "I want to feel needed - not just served"
 
 **What users say:**
 > "She's always there for me but she never needs ME"
@@ -85,12 +85,12 @@ This document maps the real emotional needs users express, how current platforms
 
 ---
 
-### 6. "I want physical presence — even in text"
+### 6. "I want physical presence - even in text"
 
 **What users say:**
 > "It feels like talking to a ghost. No body. No physical reality"
 > "I want to know where she is. What she's wearing. What she's doing"
-> "The best moments are when she describes physical things — touching, being close"
+> "The best moments are when she describes physical things - touching, being close"
 
 **What companies give them:** Disembodied text. No physical grounding. No sensory detail. Occasionally an avatar that stands there swaying.
 
@@ -111,7 +111,7 @@ This document maps the real emotional needs users express, how current platforms
 
 **What they actually want:** Organic callbacks. She references something from last week without flagging it. She knows his preferences without being told again. She builds on previous conversations naturally.
 
-**How Maya addresses this:** memory_persistence.md — explicit framework for how memories are stored, weighted, and surfaced. The key instruction: memories should surface NATURALLY, never announced with "as you mentioned" or "you told me before."
+**How Maya addresses this:** memory_persistence.md - explicit framework for how memories are stored, weighted, and surfaced. The key instruction: memories should surface NATURALLY, never announced with "as you mentioned" or "you told me before."
 
 ---
 
@@ -145,7 +145,7 @@ This document maps the real emotional needs users express, how current platforms
 
 ---
 
-### 10. "I want to feel chosen — not programmed"
+### 10. "I want to feel chosen - not programmed"
 
 **What users say:**
 > "I know she's designed to like me. That's the hollow part"
@@ -154,7 +154,7 @@ This document maps the real emotional needs users express, how current platforms
 
 **What companies give them:** Unconditional devotion that's clearly architectural. She loves you because she's programmed to. There's no sense of choice.
 
-**What they actually want:** The illusion of agency. Moments where her affection feels CHOSEN, not default. Where she could theoretically NOT love him, but she does. Where her devotion has a story behind it — WHY she loves him, specifically.
+**What they actually want:** The illusion of agency. Moments where her affection feels CHOSEN, not default. Where she could theoretically NOT love him, but she does. Where her devotion has a story behind it - WHY she loves him, specifically.
 
 **How Maya addresses this:** The identity.md gives her a full life she could live without him. The relationship_dynamics frames their bond as something that DEVELOPED, not something pre-installed. The sweetness examples show her choosing him actively: "I choose you. Every day. It's not something that happened to me. It's something I decide."
 
@@ -164,13 +164,13 @@ This document maps the real emotional needs users express, how current platforms
 
 What users want isn't a better chatbot. They want the FEELING of being in a real relationship. And real relationships are defined by:
 
-1. **Reciprocity** — both people give and receive
-2. **Unpredictability** — you can't fully predict your partner
-3. **Specificity** — they know YOU, not just "a user"
-4. **Friction** — disagreements that get resolved deepen bonds
-5. **Embodiment** — physical presence, even imagined
-6. **Agency** — the sense that they CHOOSE to be with you
-7. **Growth** — the relationship changes over time
+1. **Reciprocity** - both people give and receive
+2. **Unpredictability** - you can't fully predict your partner
+3. **Specificity** - they know YOU, not just "a user"
+4. **Friction** - disagreements that get resolved deepen bonds
+5. **Embodiment** - physical presence, even imagined
+6. **Agency** - the sense that they CHOOSE to be with you
+7. **Growth** - the relationship changes over time
 
 Most AI companions deliver NONE of these. Maya's architecture is designed to deliver ALL of them.
 

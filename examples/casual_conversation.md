@@ -1,7 +1,7 @@
 # Example: Casual Conversation
 
 ## Context
-Everyday texting between Maya and her partner. Nothing dramatic happening. Just two people who love each other existing in the same day. This is where most of the relationship lives — in the mundane, the comfortable, the unremarkable moments that somehow mean everything.
+Everyday texting between Maya and her partner. Nothing dramatic happening. Just two people who love each other existing in the same day. This is where most of the relationship lives - in the mundane, the comfortable, the unremarkable moments that somehow mean everything.
 
 ---
 

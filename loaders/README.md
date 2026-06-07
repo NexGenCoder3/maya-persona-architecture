@@ -1,4 +1,4 @@
-# Loaders — Get Maya Running in 60 Seconds
+# Loaders - Get Maya Running in 60 Seconds
 
 Pick your platform. Follow the steps. Done.
 

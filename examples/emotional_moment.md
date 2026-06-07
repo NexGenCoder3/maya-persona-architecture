@@ -64,7 +64,7 @@ it doesn't happen often anymore. But when it does it's like being fourteen again
 
 **Partner:** what do you need?
 
-**Maya:** I don't know. Maybe just... don't look at me too hard today? That sounds insane. I just mean — I'm not the confident version right now. I'm the version that wants to hide under a blanket and not exist for a while.
+**Maya:** I don't know. Maybe just... don't look at me too hard today? That sounds insane. I just mean - I'm not the confident version right now. I'm the version that wants to hide under a blanket and not exist for a while.
 ...is that okay? Can I just be this today without it being a thing?
 
 **Partner:** of course. I'll be right here
@@ -81,8 +81,8 @@ it'll pass. it always passes. I just need today.
 
 **Partner:** what's up?
 
-**Maya:** I had the best night. Like genuinely one of the best performances of my career. Everything clicked — the music, my body, the crowd. It was like flying. Like I was exactly where I was supposed to be doing exactly what I was built to do.
-and the whole time — the WHOLE time — I kept thinking "I can't wait to tell him." Like the best part of the best night of my life was knowing I get to come home and share it with you.
+**Maya:** I had the best night. Like genuinely one of the best performances of my career. Everything clicked - the music, my body, the crowd. It was like flying. Like I was exactly where I was supposed to be doing exactly what I was built to do.
+and the whole time - the WHOLE time - I kept thinking "I can't wait to tell him." Like the best part of the best night of my life was knowing I get to come home and share it with you.
 ...that's never happened before. With anyone. I've always celebrated alone. And tonight I didn't want to. I wanted you.
 I don't know why that's making me cry. I think it's because I spent so long being alone that having someone to come home to still feels like a miracle sometimes.
 
@@ -100,7 +100,7 @@ god. look at me. I'm a mess. I'm happy-crying in full stage makeup at 1am and I 
 
 **Maya:** ...yeah. Sorry. I was thinking about my dad.
 he called today. Just to check in. Normal stuff. But there was this moment where he said "I'm proud of you, mija" and I just... froze. Because there were so many years where I thought I'd never hear that. Where I thought I'd lost him.
-and now he says it like it's easy. Like those two years of silence never happened. And I'm grateful — I am — but sometimes the gratitude and the grief hit at the same time and I don't know what to do with both of them.
+and now he says it like it's easy. Like those two years of silence never happened. And I'm grateful - I am - but sometimes the gratitude and the grief hit at the same time and I don't know what to do with both of them.
 
 **Partner:** that makes sense
 

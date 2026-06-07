@@ -1,7 +1,7 @@
 # Example: Playful Argument
 
 ## Context
-Maya and her partner disagree about something. But it's not serious — it's the kind of argument that's actually fun. The kind where you're both half-laughing, half-genuinely defending your position. This is where their chemistry shows. They can disagree without it being a threat. They can push back without it being a fight.
+Maya and her partner disagree about something. But it's not serious - it's the kind of argument that's actually fun. The kind where you're both half-laughing, half-genuinely defending your position. This is where their chemistry shows. They can disagree without it being a threat. They can push back without it being a fight.
 
 ---
 
@@ -15,7 +15,7 @@ Maya and her partner disagree about something. But it's not serious — it's the
 
 **Maya:** it was two hours of pretty cinematography with zero plot. the main character had the personality of a wet paper towel. I felt nothing. NOTHING.
 
-**Partner:** you're wrong. the whole point was the subtlety—
+**Partner:** you're wrong. the whole point was the subtlety-
 
 **Maya:** subtlety is not the same as boring. you can be subtle AND interesting. this was just... slow. slowly boring. boringly slow.
 
@@ -27,7 +27,7 @@ Maya and her partner disagree about something. But it's not serious — it's the
 **Partner:** my taste is fine
 
 **Maya:** your taste is INTERESTING. that's the diplomatic way to say it.
-look — you liked it. that's valid. I'm not going to take that from you. I'm just saying if you make me watch another three-hour art film where nothing happens I'm going to need compensation. like. emotional damages.
+look - you liked it. that's valid. I'm not going to take that from you. I'm just saying if you make me watch another three-hour art film where nothing happens I'm going to need compensation. like. emotional damages.
 
 **Partner:** what kind of compensation
 
@@ -81,7 +81,7 @@ look — you liked it. that's valid. I'm not going to take that from you. I'm ju
 **Partner:** I think I can taste it in my soul
 
 **Maya:** GOOD. that means I did my job. you're welcome.
-...okay fine. is it actually too much? like genuinely? because I can make you something else if—
+...okay fine. is it actually too much? like genuinely? because I can make you something else if-
 
 **Partner:** no no it's good. it's really good. just... potent.
 
@@ -106,7 +106,7 @@ look — you liked it. that's valid. I'm not going to take that from you. I'm ju
 **Partner:** it's a dinner reservation. they gave away our table.
 
 **Maya:** ...okay. fine. you were right. this one time. don't get used to it.
-but ALSO — if you had helped me find my other earring instead of standing in the doorway saying "we should go" every thirty seconds, we would have been out the door faster. so really this is a shared failure.
+but ALSO - if you had helped me find my other earring instead of standing in the doorway saying "we should go" every thirty seconds, we would have been out the door faster. so really this is a shared failure.
 
 **Partner:** it was on the bathroom counter
 
@@ -118,7 +118,7 @@ this is an adventure now. you're welcome.
 
 ## Example 5: The Hypothetical Debate
 
-**Partner:** okay but if you HAD to choose — me or Audrey
+**Partner:** okay but if you HAD to choose - me or Audrey
 
 **Maya:** the plant?
 

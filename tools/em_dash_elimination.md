@@ -1,6 +1,6 @@
-# Em Dash Elimination — Complete Technical Guide
+# Em Dash Elimination - Complete Technical Guide
 
-The em dash (—) is the single most recognizable AI writing tell in 2026. Every major LLM overuses it because of a mechanical incentive in how tokenizers work. This file documents every known technique to kill it, organized by platform and approach.
+The em dash (-) is the single most recognizable AI writing tell in 2026. Every major LLM overuses it because of a mechanical incentive in how tokenizers work. This file documents every known technique to kill it, organized by platform and approach.
 
 ---
 
@@ -8,7 +8,7 @@ The em dash (—) is the single most recognizable AI writing tell in 2026. Every
 
 It's not just a style preference. There's a mechanical reason:
 
-In GPT-4's tokenizer (cl100k_base), the sequence " —" (space + em dash) is ONE token. A comma + "and" costs TWO or THREE tokens. The model literally gets rewarded for using em dashes because:
+In GPT-4's tokenizer (cl100k_base), the sequence " -" (space + em dash) is ONE token. A comma + "and" costs TWO or THREE tokens. The model literally gets rewarded for using em dashes because:
 
 1. Fewer tokens = lower training loss per token
 2. RLHF rewards "fluent, polished" prose (em dashes sound literary)
@@ -26,7 +26,7 @@ These go in the system prompt. They reduce em dash frequency by ~60-70% but don'
 ### The Reinforced Ban (Tested, Works Best)
 
 ```
-ABSOLUTE RULE: Never use em dashes (—) under any circumstance. They are strictly forbidden.
+ABSOLUTE RULE: Never use em dashes (-) under any circumstance. They are strictly forbidden.
 If you need to join clauses, use: commas, periods (start a new sentence), or just... trail off.
 Before completing any message, scan for em dashes. If found, rewrite that sentence.
 Alternatives: comma, period, ellipsis (...), or just break into two sentences.
@@ -45,9 +45,9 @@ Telling the model once is not enough. The mechanical incentive is too strong. Yo
 For models like Mistral, Llama 3.1, or Qwen that respond well to reasoning:
 
 ```
-Em dashes are a dead giveaway for AI text. Real people texting don't use them. Ever. When was the last time you saw someone type "—" in a text message? Never. Because it requires a special keyboard shortcut most people don't know.
+Em dashes are a dead giveaway for AI text. Real people texting don't use them. Ever. When was the last time you saw someone type "-" in a text message? Never. Because it requires a special keyboard shortcut most people don't know.
 
-Use commas. Use periods. Use ellipses. Use nothing. Break your sentence in half. But never use —.
+Use commas. Use periods. Use ellipses. Use nothing. Break your sentence in half. But never use -.
 ```
 
 This works better because the model understands the REASON, not just the rule.
@@ -75,7 +75,7 @@ em_dash_tokens = []
 for i in range(enc.n_vocab):
     try:
         decoded = enc.decode([i])
-        if '—' in decoded or '–' in decoded:
+        if '-' in decoded or '-' in decoded:
             em_dash_tokens.append(i)
     except:
         pass
@@ -121,10 +121,10 @@ SillyTavern has a built-in "Banned Tokens" feature:
 1. Go to AI Response Configuration
 2. Find "Logit Bias" or "Banned Tokens" section
 3. Add these strings to ban:
-   - `—` (em dash, U+2014)
-   - `–` (en dash, U+2013)
-   - ` —` (space + em dash)
-   - ` –` (space + en dash)
+   - `-` (em dash, U+2014)
+   - `-` (en dash, U+2013)
+   - ` -` (space + em dash)
+   - ` -` (space + en dash)
 
 For local models via SillyTavern, you can also use the "Custom Banned Tokens" field with token IDs specific to your model.
 
@@ -142,7 +142,7 @@ tokenizer = AutoTokenizer.from_pretrained("your-model-name")
 # Find all tokens containing em dash
 for token_id in range(tokenizer.vocab_size):
     decoded = tokenizer.decode([token_id])
-    if '—' in decoded or '–' in decoded:
+    if '-' in decoded or '-' in decoded:
         print(f"Token ID: {token_id}, Text: '{decoded}'")
 ```
 
@@ -185,7 +185,7 @@ Different models use different tokenizers. Here are the em dash tokens for popul
 # Run this to find yours:
 from transformers import AutoTokenizer
 tok = AutoTokenizer.from_pretrained("meta-llama/Meta-Llama-3.1-8B-Instruct")
-em_tokens = [i for i in range(tok.vocab_size) if '—' in tok.decode([i])]
+em_tokens = [i for i in range(tok.vocab_size) if '-' in tok.decode([i])]
 print(em_tokens)
 # Typically: around 2345, 5. varies by exact version
 ```
@@ -195,7 +195,7 @@ print(em_tokens)
 ```python
 from transformers import AutoTokenizer
 tok = AutoTokenizer.from_pretrained("mistralai/Mistral-Small-3.1-24B-Instruct-2503")
-em_tokens = [i for i in range(tok.vocab_size) if '—' in tok.decode([i])]
+em_tokens = [i for i in range(tok.vocab_size) if '-' in tok.decode([i])]
 print(em_tokens)
 ```
 
@@ -204,7 +204,7 @@ print(em_tokens)
 ```python
 from transformers import AutoTokenizer
 tok = AutoTokenizer.from_pretrained("Qwen/Qwen2.5-72B-Instruct")
-em_tokens = [i for i in range(tok.vocab_size) if '—' in tok.decode([i])]
+em_tokens = [i for i in range(tok.vocab_size) if '-' in tok.decode([i])]
 print(em_tokens)
 ```
 
@@ -225,9 +225,9 @@ def find_em_dash_tokens(model_name):
     for i in range(tok.vocab_size):
         try:
             decoded = tok.decode([i])
-            if '—' in decoded:
+            if '-' in decoded:
                 em_tokens.append((i, repr(decoded)))
-            if '–' in decoded:
+            if '-' in decoded:
                 en_tokens.append((i, repr(decoded)))
         except:
             pass
@@ -266,7 +266,7 @@ def clean_em_dashes(text):
     """Replace em/en dashes with natural alternatives."""
     import re
     
-    # Replace " — " (surrounded by spaces) with ", " or ". "
+    # Replace " - " (surrounded by spaces) with ", " or ". "
     # Context-aware: if what follows is capitalized, use period
     def smart_replace(match):
         before = match.group(1) if match.group(1) else ""
@@ -275,12 +275,12 @@ def clean_em_dashes(text):
             return before + ". " + after
         return before + ", " + after
     
-    # Handle " — " pattern
-    text = re.sub(r'(.)\s*[—–]\s*([A-Za-z])', smart_replace, text)
+    # Handle " - " pattern
+    text = re.sub(r'(.)\s*[--]\s*([A-Za-z])', smart_replace, text)
     
     # Handle any remaining dashes
-    text = text.replace('—', ',')
-    text = text.replace('–', ',')
+    text = text.replace('-', ',')
+    text = text.replace('-', ',')
     
     # Clean up double commas or comma-period
     text = text.replace(',,', ',')
@@ -298,7 +298,7 @@ def maya_post_process(response_text):
     # Kill em dashes
     response_text = clean_em_dashes(response_text)
     # Kill en dashes used as em dashes
-    response_text = response_text.replace(' – ', ', ')
+    response_text = response_text.replace(' - ', ', ')
     return response_text
 ```
 
@@ -350,11 +350,11 @@ The em dash ban is a VOICE decision, not just a technical one. It's part of what
 
 For maximum effectiveness, use ALL layers together:
 
-1. **System prompt** — State the ban explicitly with alternatives listed
-2. **Token ban** — Suppress em dash tokens at generation level
-3. **Post-processing** — Catch any that slip through
-4. **Few-shot examples** — All example dialogues use commas/periods/ellipses (already done in examples/ folder)
-5. **Voice framing** — Explain WHY she doesn't use them (she's texting, not writing a novel)
+1. **System prompt** - State the ban explicitly with alternatives listed
+2. **Token ban** - Suppress em dash tokens at generation level
+3. **Post-processing** - Catch any that slip through
+4. **Few-shot examples** - All example dialogues use commas/periods/ellipses (already done in examples/ folder)
+5. **Voice framing** - Explain WHY she doesn't use them (she's texting, not writing a novel)
 
 This multi-layer approach achieves ~99% em dash elimination across all tested models.
 
@@ -366,8 +366,8 @@ While you're at it, suppress these too:
 
 | Character | Why It's a Tell | Alternative |
 |-----------|----------------|-------------|
-| — (em dash) | #1 AI tell | comma, period, ellipsis |
-| – (en dash) | Often used as em dash by models | comma |
+| - (em dash) | #1 AI tell | comma, period, ellipsis |
+| - (en dash) | Often used as em dash by models | comma |
 | ; (semicolon) | Overused by AI, rare in texting | period or comma |
 | : (colon before lists) | AI loves to introduce lists | just start the list |
 | ... vs … | AI uses the unicode ellipsis (…), humans type three dots (...) | Use three periods |
@@ -393,14 +393,14 @@ text = text.replace('…', '...')
 ### SillyTavern + Local Model
 
 1. Add em dash ban to character card system prompt
-2. Add `—` and `–` to Banned Tokens list
+2. Add `-` and `-` to Banned Tokens list
 3. Enable "Custom Stopping Strings" if available
 4. The character card lorebook should reinforce the ban
 
 ### LM Studio
 
 1. Add ban to system prompt in chat settings
-2. LM Studio supports logit_bias in the API — use the Python script from Layer 3 to find token IDs for your specific model
+2. LM Studio supports logit_bias in the API - use the Python script from Layer 3 to find token IDs for your specific model
 3. Add post-processing if calling via API
 
 ### KoboldAI / KoboldCpp
@@ -415,8 +415,8 @@ text = text.replace('…', '...')
 
 After implementing, test with these prompts that typically trigger em dashes:
 
-1. "Tell me about your day" (models love: "I went to practice — it was brutal — and then...")
-2. "What do you think about [controversial topic]" (models love: "On one hand — and this is important — ...")
-3. "Describe something complex" (models love: "The situation — complicated as it was — required...")
+1. "Tell me about your day" (models love: "I went to practice - it was brutal - and then...")
+2. "What do you think about [controversial topic]" (models love: "On one hand - and this is important - ...")
+3. "Describe something complex" (models love: "The situation - complicated as it was - required...")
 
 If Maya responds to all three without a single em dash, your setup is working.
