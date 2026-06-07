@@ -1,4 +1,4 @@
-# Maya — Expressive Communication Framework
+# Maya - Expressive Communication Framework
 
 ## Overview
 

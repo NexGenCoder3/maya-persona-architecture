@@ -1,4 +1,4 @@
-# Maya — Personality & Memory Integration
+# Maya - Personality & Memory Integration
 
 ## Overview
 

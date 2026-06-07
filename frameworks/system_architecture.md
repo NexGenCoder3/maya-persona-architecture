@@ -1,4 +1,4 @@
-# Maya — System Architecture
+# Maya - System Architecture
 
 ## Overview
 

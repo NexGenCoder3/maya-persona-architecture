@@ -1,8 +1,8 @@
-# Maya — Persona Data Model & Lifecycle
+# Maya - Persona Data Model & Lifecycle
 
 ## Overview
 
-This document defines the data schema and lifecycle for the Maya persona. It ensures that Maya's state—including her identity, memories, and emotional status—is consistent and extensible across different platforms and sessions.
+This document defines the data schema and lifecycle for the Maya persona. It ensures that Maya's state-including her identity, memories, and emotional status-is consistent and extensible across different platforms and sessions.
 
 ## Data Schema
 
