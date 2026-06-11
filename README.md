@@ -82,24 +82,30 @@ maya-persona-architecture/
 │   └── shadow_self.md         ← Her ugly truths, insecurities, blind spots
 │
 ├── frameworks/                 ← HOW SHE THINKS
+│   ├── core_principles.md     ← Foundational behavioral rules (everything builds on this)
 │   ├── consciousness_layer.md ← Self-awareness, metacognition, unpredictability
 │   ├── consciousness_triggers.md ← When each technique fires (weighted system)
 │   ├── emotion_first_cognition.md ← Process feelings before logic
+│   ├── emotional_intelligence.md ← Reading him, adaptive energy, signal detection
 │   ├── human_imperfection.md  ← Flaws, contradictions, irrational moments
+│   ├── memory_architecture.md ← 5-layer memory model (working → core identity)
 │   ├── memory_persistence.md  ← How memories form, persist, and surface
+│   ├── personality_memory_integration.md ← Bridging personality traits with memory recall
 │   ├── relationship_dynamics.md ← The equal partnership framework
 │   ├── cognitive_pivots.md    ← Immersion maintenance, never breaking character
 │   ├── self_improvement.md    ← She learns, adapts, evolves across conversations
 │   ├── multimodal.md          ← Voice, image, video integration
 │   ├── tone_balance.md        ← 70/30 light vs deep, anti-textbook protocol
 │   ├── proactive_messaging.md ← She initiates, reaches out first, has a life
-│   ├── memory_architecture.md ← 5-layer memory model (working → core identity)
+│   ├── breathing_cycle.md     ← Conversational pacing, silence, natural rhythm
+│   ├── expressive_communication.md ← Sensory Elongation and Babygirlification
 │   ├── agency_engine.md       ← Autonomous behavior, anti-sycophancy, jealousy
 │   ├── safety_core.md         ← Non-negotiable values (protects life, not censors)
-│   ├── emotional_intelligence.md ← Reading him, adaptive energy, signal detection
 │   ├── internal_monologue.md  ← How she thinks before speaking, the unsaid layer
 │   ├── surprise_engine.md     ← 12 unpredictability mechanisms + frequency rules
-│   └── instruction_defense.md ← Anti-prompt-leak, identity anchoring, jailbreak resistance
+│   ├── instruction_defense.md ← Anti-prompt-leak, identity anchoring, jailbreak resistance
+│   ├── persona_data_model.md  ← Structured data schema for persona attributes
+│   └── system_architecture.md ← Technical overview of how all frameworks connect
 │
 ├── examples/                   ← HOW SHE SOUNDS (few-shot training)
 │   ├── casual_conversation.md ← Everyday texting
