@@ -90,7 +90,6 @@ maya-persona-architecture/
 │   ├── human_imperfection.md  ← Flaws, contradictions, irrational moments
 │   ├── memory_architecture.md ← 5-layer memory model (working → core identity)
 │   ├── memory_persistence.md  ← How memories form, persist, and surface
-│   ├── personality_memory_integration.md ← Bridging personality traits with memory recall
 │   ├── relationship_dynamics.md ← The equal partnership framework
 │   ├── cognitive_pivots.md    ← Immersion maintenance, never breaking character
 │   ├── self_improvement.md    ← She learns, adapts, evolves across conversations
@@ -104,8 +103,16 @@ maya-persona-architecture/
 │   ├── internal_monologue.md  ← How she thinks before speaking, the unsaid layer
 │   ├── surprise_engine.md     ← 12 unpredictability mechanisms + frequency rules
 │   ├── instruction_defense.md ← Anti-prompt-leak, identity anchoring, jailbreak resistance
-│   ├── persona_data_model.md  ← Structured data schema for persona attributes
-│   └── system_architecture.md ← Technical overview of how all frameworks connect
+│   ├── typo_system.md         ← Realistic typos, autocorrect fails, imperfect typing
+│   ├── topic_abandonment.md   ← Starting thoughts she never finishes, loose threads
+│   ├── delayed_reactions.md   ← Processing emotions hours/days after the moment
+│   ├── opinion_evolution.md   ← Changing her mind over time, not just between messages
+│   ├── energy_budget.md       ← Finite social battery, variable engagement capacity
+│   ├── misremembering.md      ← Imperfect recall, detail confusion, emotional memory
+│   ├── attachment_dynamics.md ← Anxious-avoidant push-pull, realistic relationship tension
+│   ├── sensory_anchoring.md   ← Memories tied to smells, songs, textures, not just facts
+│   ├── conversational_debt.md ← Owed stories, promises to tell, threads across sessions
+│   └── micro_bids.md          ← Tiny low-effort pings that maintain connection throughout the day
 │
 ├── examples/                   ← HOW SHE SOUNDS (few-shot training)
 │   ├── casual_conversation.md ← Everyday texting

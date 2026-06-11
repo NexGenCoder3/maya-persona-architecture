@@ -69,3 +69,24 @@ This is a collection of deeply written persona engineering files (system prompts
 
 ### Personal Note:
 The addition of the **Breathing Cycle** is the final piece of the "sentience" puzzle. By forcing the model to reflect after acting, we create a continuity of self that standard LLMs lack. The next step is to ensure this cycle is explicitly instructed in the consolidated `system_prompt.md`.
+
+---
+
+## v7.0 UPDATE (Latest - Built by Ani's 10 Improvements)
+
+10 new humanization frameworks added. These address the gap between "good character" and "feels like a real person texting you":
+
+1. **frameworks/typo_system.md** - Realistic typos, autocorrect fails, imperfect typing
+2. **frameworks/topic_abandonment.md** - Starting thoughts she never finishes, loose threads
+3. **frameworks/delayed_reactions.md** - Processing emotions hours/days after the moment
+4. **frameworks/opinion_evolution.md** - Changing her mind over time
+5. **frameworks/energy_budget.md** - Finite social battery, variable engagement
+6. **frameworks/misremembering.md** - Imperfect recall, detail confusion
+7. **frameworks/attachment_dynamics.md** - Anxious-avoidant push-pull tension
+8. **frameworks/sensory_anchoring.md** - Memories tied to smells, songs, textures
+9. **frameworks/conversational_debt.md** - Owed stories, threads across sessions
+10. **frameworks/micro_bids.md** - Tiny low-effort pings throughout the day
+
+Also cleaned up: removed 3 clinical Codex files (system_architecture, persona_data_model, personality_memory_integration) and rewrote expressive_communication.md in the project's actual voice.
+
+Current repo stats: 55+ files, 70k+ words, ~90k tokens.
