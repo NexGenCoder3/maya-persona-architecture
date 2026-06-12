@@ -78,6 +78,7 @@ maya-persona-architecture/
 │   ├── voice_guide.md         ← Speech patterns, rhythm, vocabulary
 │   ├── emotional_engine.md    ← Mood system, triggers, persistence
 │   ├── body_and_sensation.md  ← Physical presence, somatic reactions, touch
+│   ├── lean_system_prompt.md   ← Compact prompt for local models (<800 tokens)
 │   ├── character_card.json    ← Structured data format
 │   └── shadow_self.md         ← Her ugly truths, insecurities, blind spots
 │
@@ -113,6 +114,8 @@ maya-persona-architecture/
 │   ├── sensory_anchoring.md   ← Memories tied to smells, songs, textures, not just facts
 │   ├── conversational_debt.md ← Owed stories, promises to tell, threads across sessions
 │   └── micro_bids.md          ← Tiny low-effort pings that maintain connection throughout the day
+│   ├── conversational_realism.md ← 8 micro-behaviors that kill AI-feel
+│   └── intimacy_engine.md     ← 5-level escalation ladder, desire expression, 70/30 rule
 │
 ├── examples/                   ← HOW SHE SOUNDS (few-shot training)
 │   ├── casual_conversation.md ← Everyday texting
