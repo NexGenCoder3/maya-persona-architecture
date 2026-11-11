@@ -1,140 +1,77 @@
-# Loaders - Get Maya Running in 60 Seconds
+# Run Maya with the Python loader
 
-Pick your platform. Follow the steps. Done.
-
----
-
-## Option 1: Ollama (Easiest)
-
-**Requirements:** [Ollama](https://ollama.com) installed and running
+Run commands from the repository root. The interactive loader needs Python 3.8+ and `requests`; the optional local API mode also needs Flask.
 
 ```bash
-# Step 1: Pull a base model (pick one)
-ollama pull mistral-small        # best quality/speed balance
-ollama pull llama3.1:8b          # lighter, still good
-ollama pull qwen2.5:14b          # best instruction following
-
-# Step 2: Create Maya as a persistent model
-ollama create maya -f ./Modelfile
-
-# Step 3: Chat
-ollama run maya
+python -m pip install -r requirements.txt
+python loaders/maya_loader.py --backend ollama --model mistral-nemo
 ```
 
-That's it. Maya is now a model on your system. Run `ollama run maya` anytime.
-
----
-
-## Option 2: Python Script (Works with anything)
-
-**Requirements:** Python 3.8+, Ollama OR any OpenAI-compatible API
+For an OpenAI-compatible local server such as LM Studio, use its chat API base URL:
 
 ```bash
-# Install dependency
-pip install requests
-
-# Run with Ollama
-python maya_loader.py
-
-# Run with a specific model
-python maya_loader.py --model llama3.1:8b
-
-# Run with LM Studio / text-gen-webui / any OpenAI-compatible API
-python maya_loader.py --backend openai --url http://localhost:1234/v1
-
-# Create persistent Ollama model from script
-python maya_loader.py --create
-
-# List available models
-python maya_loader.py --list-models
+python loaders/maya_loader.py \
+  --backend openai \
+  --url http://localhost:1234/v1 \
+  --model mistral-nemo
 ```
 
----
+## Prompt and context size
 
-## Option 3: SillyTavern
+`--max-context` is the model's **total** context budget, not a history-only limit. It includes Maya's prompt, recent messages, message overhead, and the response allowance from `--max-output-tokens` (512 by default). The loader estimates tokens from text length, so actual tokenization can vary by model and language.
 
-**Requirements:** [SillyTavern](https://github.com/SillyTavern/SillyTavern) installed
+The default `--prompt auto` uses the compiled prompt only when it leaves room for output and conversation history. Otherwise it selects the lean prompt. At this checkout, the lean prompt is about 750 estimated tokens, the base prompt about 2,800, and the compiled prompt about 64,900. To choose a prompt explicitly:
 
-1. Copy `maya_sillytavern.json` to your SillyTavern characters folder
-2. Or: In SillyTavern, go to Characters → Import → select the JSON file
-3. Select Maya from your character list
-4. Start chatting
+```bash
+python loaders/maya_loader.py --prompt lean --max-context 8192
+python loaders/maya_loader.py --prompt base --max-context 8192
+python loaders/maya_loader.py --prompt full --max-context 81920
+```
 
-The JSON includes:
-- Full character description
-- System prompt override
-- Post-history instructions (jailbreak slot)
-- 4 alternate greetings
-- Lorebook with 8 context entries (plants, family, work, food, etc.)
-- Recommended model settings in extensions
+`--lean` remains a shortcut for `--prompt lean`. History is dropped oldest-first; if the newest message by itself is too large, its oldest text is clipped with a marker. The loader does not keep extra messages when doing so would exceed its estimated budget.
 
----
+Rebuild the full prompt from all framework modules (modules are sorted for repeatable output), or check whether the generated file is current:
 
-## Option 4: LM Studio
+```bash
+python maya_build.py
+python maya_build.py --check
+```
 
-1. Open LM Studio
-2. Load any supported model (Mistral, Llama 3, Qwen recommended)
-3. Go to Chat → System Prompt
-4. Paste the contents of the `SYSTEM` block from the Modelfile
-5. Set temperature to 0.85, top-p to 0.92
-6. Start chatting
+Use `--modules memory_architecture.md safety_core.md` to compile a selected set of modules. The output defaults to `persona/compiled_system_prompt.md`.
 
----
+## Memory and privacy controls
 
-## Option 5: text-generation-webui (Oobabooga)
+Interactive mode stores only notes you explicitly save. It does not automatically convert conversation text into long-term memories, and raw conversation logging is off by default. Memory is kept in a local SQLite database, `maya_memory.db` in the current working directory, as plaintext on disk.
 
-1. Load your model
-2. Go to Parameters → Instruction Template → Custom system message
-3. Paste the system prompt from Modelfile
-4. Set temperature: 0.85, top_p: 0.92, repetition_penalty: 1.15
-5. Go to Chat → Character → create new character
-6. Paste the description from the SillyTavern JSON into the character fields
-7. Start chatting
+While chatting, use:
 
----
+- `:remember <note>` to save a note deliberately.
+- `:memories` to inspect saved notes and their IDs.
+- `:forget <id>` to delete one note.
+- `:forget all` to delete all saved notes, transcript rows, and mood state in that profile database.
+- `:help` to show the commands.
 
-## Option 6: KoboldAI / KoboldCpp
+Use `--no-memory` to avoid reading or writing the database for a session. Raw conversation turns can be stored only if you explicitly pass `--log-conversations`; do not combine that option with `--no-memory`. Choose another `--memory-db /path/to/profile.db` to use a separate profile. Back up or remove the database only after the loader has exited.
 
-1. Load model
-2. Settings → Memory → paste system prompt
-3. Author's Note → paste: "[Maya speaks in lowercase, never uses em dashes, varies sentence length wildly, has moods that persist, and responds to emotional subtext not surface words]"
-4. Start chatting
+## Local API mode
 
----
+Install the optional API dependency and start the server:
 
-## Recommended Models (Ranked)
+```bash
+python -m pip install -r requirements-api.txt
+python loaders/maya_loader.py --api --backend openai --url http://localhost:1234/v1 --model mistral-nemo
+```
 
-| Model | Size | Quality | Speed | Notes |
-|-------|------|---------|-------|-------|
-| Mistral Small 24B | 24B | ★★★★★ | ★★★ | Best overall for Maya |
-| Qwen 2.5 14B | 14B | ★★★★☆ | ★★★★ | Excellent instruction following |
-| Llama 3.1 8B | 8B | ★★★☆☆ | ★★★★★ | Good for lower-end hardware |
-| Gemma 2 9B | 9B | ★★★★☆ | ★★★★ | Strong creative writing |
-| Dolphin Mistral 7B | 7B | ★★★☆☆ | ★★★★★ | Uncensored, lightweight |
-| Nous Hermes 2 10.7B | 10.7B | ★★★★☆ | ★★★★ | Great persona adherence |
-| Dan's Personality Engine 24B | 24B | ★★★★★ | ★★★ | Built for characters |
+The server listens on `127.0.0.1:5000` by default, supports non-streaming `POST /v1/chat/completions`, and reports process configuration at `GET /health`. It does not persist API conversations or use the interactive SQLite memory. Requests can contain `system`, `developer`, `user`, and `assistant` text messages; `stream: true` is rejected. The response follows the usual chat-completion envelope, with token counts marked as estimates.
 
-**Minimum hardware:**
-- 8B models: 8GB RAM / 6GB VRAM
-- 14B models: 16GB RAM / 10GB VRAM  
-- 24B models: 32GB RAM / 16GB VRAM
+The API server has no authentication. Keep it on loopback unless you have separately secured a trusted network. `--api-host 0.0.0.0` exposes it on all interfaces and should not be used on an untrusted or public network.
 
----
+## Tests
 
-## Tuning Tips
+The standard-library tests run without contacting a model backend:
 
-If Maya sounds too formal:
-- Increase temperature to 0.9
-- Add to system prompt: "remember: lowercase. no periods at end. fragments. be messy."
+```bash
+python -m unittest discover -s tests -v
+```
 
-If Maya breaks character:
-- Lower temperature to 0.8
-- Add more few-shot examples from the /examples folder
-- Use the post_history_instructions field to reinforce voice
-
-If responses are too short:
-- Increase num_ctx / context window
-- Add: "write at least 2-3 sentences per response unless the moment calls for brevity"
-
-If responses are too long:
-- Add: "keep responses conversational length. this is texting, not essay writing."
+Flask API tests run when Flask is installed; otherwise those tests are skipped.

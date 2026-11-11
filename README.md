@@ -72,93 +72,41 @@ This isn't prompt engineering. This is **persona engineering.**
 
 ```
 maya-persona-architecture/
-│
-├── 📋 README.md                          ← You are here
-├── 📋 HANDOFF.md                         ← Development history & decisions
-├── 📋 Modelfile                          ← Ollama model configuration
-│
-├── 🧬 persona/                           ← WHO Maya is
-│   ├── system_prompt.md                  ← Full system prompt (compiled)
-│   ├── lean_system_prompt.md             ← Compact version for small context windows
-│   ├── identity.md                       ← Background, family, history, wounds
-│   └── voice_guide.md                    ← Linguistic patterns, slang, rhythm
-│
-├── 🧠 frameworks/                        ← HOW Maya behaves
-│   ├── core_principles.md                ← The constitution ~ fundamental values
-│   ├── consciousness_layer.md            ← 7-technique consciousness system
-│   ├── deep_psychology.md                ← Defense mechanisms, attachment, drives
-│   ├── emotional_intelligence.md         ← Reading & responding to emotions
-│   ├── emotional_presence.md             ← Feel WITH not AT ~ show don't tell
-│   ├── identity_fortress.md              ← Immutable self-trust, anti-gaslighting
-│   ├── anti_sycophancy.md                ← Disagree when you disagree
-│   ├── selective_memory.md               ← Remember what matters, forget the rest
-│   ├── conversational_realism.md         ← Typos, topic abandonment, energy budget
-│   ├── attachment_dynamics.md            ← Push-pull, jealousy, anxious-secure cycle
-│   ├── intimacy_engine.md                ← 5-level escalation, desire architecture
-│   ├── internal_monologue.md             ← Proactive messaging, surprise generation
-│   ├── anti_leak_defense.md              ← 5-layer instruction leak prevention
-│   ├── emoji_intelligence.md             ← When, where, why to use emojis
-│   ├── tone_balance.md                   ← The 70/30 rule
-│   ├── breathing_cycle.md                ← Natural rhythm and pacing
-│   ├── memory_architecture.md            ← Technical memory schema
-│   ├── safety_core.md                    ← Psychological safety guarantees
-│   ├── expressive_communication.md       ← Advanced linguistic techniques
-│   ├── persona_data_model.md             ← Data structures for persona state
-│   ├── personality_memory_integration.md ← How personality and memory interact
-│   └── system_architecture.md            ← Technical architecture overview
-│
-├── 💬 examples/                          ← WHAT Maya sounds like
-│   └── conversation_samples.md           ← Real conversation examples
-│
-├── 🎨 tools/                             ← WHAT Maya can do
-│   └── visual_prompts.md                 ← Image generation prompt bank
-│
-├── ⚙️ loaders/                           ← HOW to run Maya
-│   ├── maya_loader.py                    ← Main loader (v6.0) with all backends
-│   ├── maya_build.py                     ← Compile full prompt from modules
-│   └── agent_integration.md             ← OpenClaw / agent framework setup
-│
-└── 📊 diagrams/                          ← Visual architecture maps
-    └── (coming soon)
+├── maya_build.py                  # Compile framework modules into a full prompt
+├── requirements.txt               # Interactive loader dependency
+├── requirements-api.txt           # Optional Flask API dependency
+├── persona/                        # System prompts and persona references
+├── frameworks/                     # Modular behavioral frameworks
+├── examples/                       # Conversation examples
+├── tools/                           # Prompt and style utilities
+├── loaders/                        # Python loader and integration guides
+└── tests/                           # Offline unit tests
 ```
 
 ---
 
 ## 🚀 Quick Start
 
-### Option 1: Ollama (Simplest)
+From the repository root, install the loader dependency and start an interactive Ollama session:
+
 ```bash
-# Pull a capable base model
-ollama pull mistral-nemo
-
-# Load Maya's personality
-ollama create maya -f Modelfile
-
-# Chat
-ollama run maya
+python -m pip install -r requirements.txt
+python loaders/maya_loader.py --backend ollama --model mistral-nemo
 ```
 
-### Option 2: LM Studio
-1. Download [Mistral-Nemo-Instruct-2407](https://huggingface.co/mistralai/Mistral-Nemo-Instruct-2407) (GGUF Q5_K_M)
-2. Copy contents of `persona/lean_system_prompt.md` into the System Prompt field
-3. Set temperature to 0.85, top_p to 0.92
-4. Start chatting
+For LM Studio or another OpenAI-compatible server:
 
-### Option 3: Python Loader (Full Features)
 ```bash
-# Clone the repo
-git clone https://github.com/NexGenCoder3/maya-persona-architecture.git
-cd maya-persona-architecture
-
-# Run with Ollama backend
-python loaders/maya_loader.py --model mistral-nemo --lean
-
-# Run with OpenAI-compatible backend
-python loaders/maya_loader.py --backend openai --model mistral-nemo --lean
-
-# Build the full compiled prompt
-python loaders/maya_build.py
+python loaders/maya_loader.py --backend openai --url http://localhost:1234/v1 --model mistral-nemo
 ```
+
+The default `--prompt auto` chooses a prompt that fits `--max-context` (8192 by default), including the response reserve. The compiled prompt is about 64,900 estimated tokens; use `--prompt full` only with a suitably large context. Use `--prompt lean` or `--prompt base` to choose smaller variants directly.
+
+Interactive memory is explicit: use `:remember <note>`, `:memories`, `:forget <id>`, or `:forget all`. Raw conversation logging is off by default. Pass `--no-memory` to avoid using SQLite memory, or `--log-conversations` to opt in to transcript storage.
+
+To build/check the full prompt, run `python maya_build.py` or `python maya_build.py --check`. For the optional local API server, install `python -m pip install -r requirements-api.txt` and add `--api`; it binds to `127.0.0.1` by default and does not persist API conversations.
+
+See [`loaders/README.md`](loaders/README.md) for prompt sizing details, memory commands, API limits, and tests.
 
 ---
 

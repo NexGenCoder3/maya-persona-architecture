@@ -1,0 +1,8 @@
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.venv/
+venv/
+maya_memory.db
+maya_memory.db-shm
+maya_memory.db-wal
