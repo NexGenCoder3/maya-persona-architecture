@@ -6,6 +6,7 @@ loader uses a character-based estimate, reserves output space, and never keeps
 history that exceeds its calculated budget.
 """
 import argparse
+import ipaddress
 import json
 import math
 import sqlite3
@@ -195,6 +196,7 @@ class MayaMemory:
         self.conn = sqlite3.connect(self.db_path, timeout=5)
         self.conn.execute("PRAGMA busy_timeout = 5000")
         self.conn.execute("PRAGMA journal_mode = WAL")
+        self.conn.execute("PRAGMA secure_delete = ON")
         self.create_tables()
 
     def create_tables(self):
@@ -241,11 +243,20 @@ class MayaMemory:
         return cursor.rowcount > 0
 
     def clear_all(self):
-        """Delete durable notes, optional transcript rows, and saved mood state."""
+        """Forget profile data and reclaim SQLite copies of deleted content.
+
+        This clears notes, optional transcript rows, and mood state. Checkpointing
+        and vacuuming reduce recoverable copies in this SQLite database; they do
+        not erase filesystem snapshots, backups, or storage-device remanence.
+        """
+        self.conn.execute("PRAGMA secure_delete = ON")
         with self.conn:
             self.conn.execute("DELETE FROM long_term_memory")
             self.conn.execute("DELETE FROM conversation_log")
             self.conn.execute("DELETE FROM mood_state")
+        self.conn.execute("PRAGMA wal_checkpoint(TRUNCATE)")
+        self.conn.execute("VACUUM")
+        self.conn.execute("PRAGMA wal_checkpoint(TRUNCATE)")
 
     def set_mood(self, mood_dict):
         if not isinstance(mood_dict, dict):
@@ -448,6 +459,84 @@ def chat_openai(messages, model="mistral-small", stream=True, url=None,
         _close_response(response)
 
 
+class TurnContextError(ValueError):
+    """Raised when a normalized turn cannot fit within the configured budget."""
+
+
+class MayaTurnService:
+    """Shared, channel-neutral path from normalized history to one model reply.
+
+    Channel adapters provide ordered ``role``/``content`` messages and a separate
+    system prompt. This service applies the same context budget and backend call
+    for every adapter; memory is supplied explicitly by the adapter's prompt.
+    """
+
+    def __init__(self, model, backend="ollama", url=None,
+                 max_context=DEFAULT_MAX_CONTEXT,
+                 max_output_tokens=DEFAULT_MAX_OUTPUT_TOKENS,
+                 timeout=DEFAULT_TIMEOUT, chat_fn=None):
+        if backend not in ("ollama", "openai"):
+            raise ValueError("backend must be ollama or openai")
+        self.model = model
+        self.backend = backend
+        self.url = url
+        self.max_context = _positive_int(max_context, "max_context")
+        self.max_output_tokens = _positive_int(max_output_tokens, "max_output_tokens")
+        self.timeout = _positive_int(timeout, "timeout")
+        self.chat_fn = chat_fn or (chat_openai if backend == "openai" else chat_ollama)
+
+    def complete(self, history, system_prompt, stream=False, max_output_tokens=None):
+        """Run one bounded turn and return content, retained history, and usage."""
+        output_limit = _positive_int(
+            max_output_tokens if max_output_tokens is not None else self.max_output_tokens,
+            "max_output_tokens",
+        )
+        if output_limit > self.max_output_tokens:
+            raise TurnContextError(
+                "max_output_tokens exceeds the configured server limit of {}".format(
+                    self.max_output_tokens
+                )
+            )
+        if not isinstance(system_prompt, str):
+            raise TurnContextError("system_prompt must be a string")
+        system_tokens = estimate_tokens(system_prompt) + MESSAGE_OVERHEAD_TOKENS
+        if system_tokens + output_limit + MIN_HISTORY_TOKENS > self.max_context:
+            raise TurnContextError(
+                "System prompt and requested output leave no safe room for conversation history"
+            )
+        trimmed = trim_context(
+            history,
+            max_tokens=self.max_context,
+            system_tokens=system_tokens,
+            reserved_tokens=output_limit,
+        )
+        if not trimmed or not any(message.get("role") == "user" for message in trimmed):
+            raise TurnContextError(
+                "The newest user message does not fit the configured context budget"
+            )
+        messages = [{"role": "system", "content": system_prompt}] + trimmed
+        response = self.chat_fn(
+            messages,
+            model=self.model,
+            stream=stream,
+            url=self.url,
+            max_tokens=output_limit,
+            timeout=self.timeout,
+        )
+        if not isinstance(response, str):
+            raise RuntimeError("Model backend did not return text")
+        prompt_tokens = system_tokens + sum(
+            estimate_tokens(message["content"]) + MESSAGE_OVERHEAD_TOKENS
+            for message in trimmed
+        )
+        return {
+            "content": response,
+            "messages": trimmed,
+            "prompt_tokens": prompt_tokens,
+            "completion_tokens": estimate_tokens(response),
+        }
+
+
 # ============================================================
 # API SERVER
 # ============================================================
@@ -493,6 +582,15 @@ def create_api_app(model="mistral-small", backend="ollama", url=None,
         raise ValueError("backend must be ollama or openai")
     system_prompt = load_prompt(prompt_mode, max_context, max_output_tokens)
     chat_fn = chat_openai if backend == "openai" else chat_ollama
+    turn_service = MayaTurnService(
+        model=model,
+        backend=backend,
+        url=url,
+        max_context=max_context,
+        max_output_tokens=max_output_tokens,
+        timeout=timeout,
+        chat_fn=chat_fn,
+    )
     app = Flask(__name__)
     app.config["MAX_CONTENT_LENGTH"] = 2 * 1024 * 1024
 
@@ -516,35 +614,22 @@ def create_api_app(model="mistral-small", backend="ollama", url=None,
         effective_system = system_prompt
         if system_parts:
             effective_system += "\n\nCLIENT-SUPPLIED SYSTEM INSTRUCTIONS:\n" + "\n\n".join(system_parts)
-        system_tokens = estimate_tokens(effective_system) + MESSAGE_OVERHEAD_TOKENS
-        if system_tokens + requested_tokens + MIN_HISTORY_TOKENS > max_context:
-            return jsonify(_api_error("System prompt and requested output leave no safe room for conversation history")), 400
-        trimmed = trim_context(
-            messages,
-            max_tokens=max_context,
-            system_tokens=system_tokens,
-            reserved_tokens=requested_tokens,
-        )
-        if not trimmed or not any(message["role"] == "user" for message in trimmed):
-            return jsonify(_api_error("The newest user message does not fit the configured context budget")), 400
-        final_messages = [{"role": "system", "content": effective_system}] + trimmed
         try:
-            response_text = chat_fn(
-                final_messages,
-                model=model,
+            turn = turn_service.complete(
+                messages,
+                effective_system,
                 stream=False,
-                url=url,
-                max_tokens=requested_tokens,
-                timeout=timeout,
+                max_output_tokens=requested_tokens,
             )
+        except TurnContextError as exc:
+            return jsonify(_api_error(str(exc))), 400
         except Exception:
             app.logger.exception("Configured model backend request failed")
             return jsonify(_api_error("The configured model backend could not complete the request", "backend_error")), 502
 
-        prompt_tokens = system_tokens + sum(
-            estimate_tokens(message["content"]) + MESSAGE_OVERHEAD_TOKENS for message in trimmed
-        )
-        completion_tokens = estimate_tokens(response_text)
+        response_text = turn["content"]
+        prompt_tokens = turn["prompt_tokens"]
+        completion_tokens = turn["completion_tokens"]
         result = {
             "id": "chatcmpl-{}".format(uuid.uuid4().hex),
             "object": "chat.completion",
@@ -574,7 +659,8 @@ def start_api_server(model, backend, port=5000, url=None, prompt_mode="auto",
                      max_context=DEFAULT_MAX_CONTEXT,
                      max_output_tokens=DEFAULT_MAX_OUTPUT_TOKENS,
                      host="127.0.0.1", timeout=DEFAULT_TIMEOUT):
-    """Start the local API server. Use a trusted network before binding wider."""
+    """Start the unauthenticated API on a loopback address only."""
+    host = _validate_loopback_host(host)
     app = create_api_app(
         model=model,
         backend=backend,
@@ -586,6 +672,26 @@ def start_api_server(model, backend, port=5000, url=None, prompt_mode="auto",
     )
     print("Maya API server on http://{}:{} (model={}, backend={})".format(host, port, model, backend))
     app.run(host=host, port=port)
+
+
+def _validate_loopback_host(host):
+    """Return a loopback host or reject an unauthenticated network bind."""
+    if not isinstance(host, str) or not host.strip():
+        raise ValueError("The unauthenticated API must bind to a loopback address")
+    host = host.strip()
+    if host.lower() == "localhost":
+        return host
+    try:
+        address = ipaddress.ip_address(host)
+    except ValueError as exc:
+        raise ValueError(
+            "The unauthenticated API must bind to localhost or a loopback IP address"
+        ) from exc
+    if not address.is_loopback:
+        raise ValueError(
+            "The unauthenticated API must bind to localhost or a loopback IP address"
+        )
+    return host
 
 
 # ============================================================
@@ -663,6 +769,15 @@ def run_interactive(model, backend="ollama", url=None, prompt_mode="auto",
             system_prompt, memory_items, mood, max_context, max_output_tokens
         )
         chat_fn = chat_openai if backend == "openai" else chat_ollama
+        turn_service = MayaTurnService(
+            model=model,
+            backend=backend,
+            url=url,
+            max_context=max_context,
+            max_output_tokens=max_output_tokens,
+            timeout=timeout,
+            chat_fn=chat_fn,
+        )
 
         print("Maya v7.0 | prompt={}| memory={}".format(prompt_mode, "on" if memory_enabled else "off"))
         print("Model: {} | Backend: {} | Context: {} | Output reserve: {}".format(
@@ -685,6 +800,7 @@ def run_interactive(model, backend="ollama", url=None, prompt_mode="auto",
                     user_input, memory, memory_enabled, memory_items):
                 if user_input == ":forget all":
                     mood = None
+                    messages.clear()
                 enhanced_system = compose_system_prompt(
                     system_prompt, memory_items, mood, max_context, max_output_tokens
                 )
@@ -692,34 +808,24 @@ def run_interactive(model, backend="ollama", url=None, prompt_mode="auto",
 
             user_message = {"role": "user", "content": user_input}
             messages.append(user_message)
-            trimmed = trim_context(
-                messages,
-                max_tokens=max_context,
-                system_tokens=estimate_tokens(enhanced_system) + MESSAGE_OVERHEAD_TOKENS,
-                reserved_tokens=max_output_tokens,
-            )
-            if not trimmed:
-                messages.pop()
-                print("That message does not fit the configured context budget. Try a shorter message or a larger --max-context.")
-                continue
-            final_messages = [{"role": "system", "content": enhanced_system}] + trimmed
-
             print("\nmaya: ", end="")
             try:
-                response = chat_fn(
-                    final_messages,
-                    model=model,
+                turn = turn_service.complete(
+                    messages,
+                    enhanced_system,
                     stream=True,
-                    url=url,
-                    max_tokens=max_output_tokens,
-                    timeout=timeout,
                 )
+            except TurnContextError as exc:
+                messages.pop()
+                print("\n{} Try a shorter message or a larger --max-context.".format(exc))
+                continue
             except (requests.RequestException, RuntimeError, ValueError) as exc:
                 messages.pop()
                 print("\nBackend request failed: {}".format(exc))
                 continue
 
-            messages.append({"role": "assistant", "content": response})
+            response = turn["content"]
+            messages = turn["messages"] + [{"role": "assistant", "content": response}]
             if memory and log_conversations:
                 memory.log_message("user", user_input)
                 memory.log_message("assistant", response)
@@ -740,7 +846,7 @@ def build_parser():
                         help="Backend base URL (Ollama: localhost:11434; OpenAI: localhost:1234/v1)")
     parser.add_argument("--api", action="store_true", help="Start the local OpenAI-style API server")
     parser.add_argument("--api-host", default="127.0.0.1",
-                        help="API bind address; defaults to loopback, use wider binds only on trusted networks")
+                        help="API bind address (loopback only; auth is not implemented)")
     parser.add_argument("--port", type=int, default=5000, help="API server port")
     parser.add_argument("--prompt", choices=["auto", "lean", "base", "full"], default="auto",
                         help="Prompt size: auto uses full only when enough context remains (default: auto)")
@@ -775,6 +881,10 @@ def main(argv=None):
         parser.error("--log-conversations cannot be used with --no-memory")
 
     if args.api:
+        try:
+            args.api_host = _validate_loopback_host(args.api_host)
+        except ValueError as exc:
+            parser.error(str(exc))
         start_api_server(
             args.model, args.backend, args.port, args.url, args.prompt,
             args.max_context, args.max_output_tokens, args.api_host, args.timeout

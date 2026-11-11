@@ -30,6 +30,8 @@ python loaders/maya_loader.py --prompt full --max-context 81920
 
 `--lean` remains a shortcut for `--prompt lean`. History is dropped oldest-first; if the newest message by itself is too large, its oldest text is clipped with a marker. The loader does not keep extra messages when doing so would exceed its estimated budget.
 
+Interactive chat and the API pass normalized role/content history through the same channel-neutral turn service. It budgets the system prompt, message overhead, retained history, and requested output together. Token counts use a four-characters-per-token estimate, not the backend tokenizer.
+
 Rebuild the full prompt from all framework modules (modules are sorted for repeatable output), or check whether the generated file is current:
 
 ```bash
@@ -48,10 +50,10 @@ While chatting, use:
 - `:remember <note>` to save a note deliberately.
 - `:memories` to inspect saved notes and their IDs.
 - `:forget <id>` to delete one note.
-- `:forget all` to delete all saved notes, transcript rows, and mood state in that profile database.
+- `:forget all` to delete all saved notes, transcript rows, and mood state in that profile database and clear the active chat history before the next turn.
 - `:help` to show the commands.
 
-Use `--no-memory` to avoid reading or writing the database for a session. Raw conversation turns can be stored only if you explicitly pass `--log-conversations`; do not combine that option with `--no-memory`. Choose another `--memory-db /path/to/profile.db` to use a separate profile. Back up or remove the database only after the loader has exited.
+Use `--no-memory` to avoid reading or writing the database for a session. Raw conversation turns can be stored only if you explicitly pass `--log-conversations`; do not combine that option with `--no-memory`. Choose another `--memory-db /path/to/profile.db` to use a separate profile. `:forget all` enables SQLite secure deletion, checkpoints/truncates its write-ahead log, and vacuums the database to remove deleted text from its database pages. This is best-effort cleanup of the active database, not erasure of backups, snapshots, or storage-device remanence. Back up or remove the database only after the loader has exited.
 
 ## Local API mode
 
@@ -62,9 +64,9 @@ python -m pip install -r requirements-api.txt
 python loaders/maya_loader.py --api --backend openai --url http://localhost:1234/v1 --model mistral-nemo
 ```
 
-The server listens on `127.0.0.1:5000` by default, supports non-streaming `POST /v1/chat/completions`, and reports process configuration at `GET /health`. It does not persist API conversations or use the interactive SQLite memory. Requests can contain `system`, `developer`, `user`, and `assistant` text messages; `stream: true` is rejected. The response follows the usual chat-completion envelope, with token counts marked as estimates.
+The server listens on `127.0.0.1:5000` by default, supports non-streaming `POST /v1/chat/completions`, and reports process configuration at `GET /health`. It does not persist API conversations or use the interactive SQLite memory. Requests can contain `system`, `developer`, `user`, and `assistant` text messages; `stream: true` is rejected. The response follows the usual chat-completion envelope, with token counts marked as estimates. API requests use the same channel-neutral turn service and context budget as interactive chat.
 
-The API server has no authentication. Keep it on loopback unless you have separately secured a trusted network. `--api-host 0.0.0.0` exposes it on all interfaces and should not be used on an untrusted or public network.
+The API server has no authentication, so it is restricted to loopback addresses (`localhost`, a loopback IP such as `127.0.0.1` or `::1`). Any wider bind, including `--api-host 0.0.0.0`, is rejected until authentication is implemented.
 
 ## Tests
 

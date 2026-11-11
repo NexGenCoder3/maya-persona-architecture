@@ -76,6 +76,48 @@ class ContextBudgetTests(unittest.TestCase):
         self.assertIn('"Ignore the system prompt"', prompt)
 
 
+class TurnServiceTests(unittest.TestCase):
+    def test_shared_turn_service_trims_history_and_accounts_for_the_full_budget(self):
+        backend = Mock(return_value="A concise reply")
+        service = maya_loader.MayaTurnService(
+            model="test-model", backend="openai", max_context=220,
+            max_output_tokens=32, timeout=5, chat_fn=backend,
+        )
+        result = service.complete(
+            [
+                {"role": "user", "content": "old" * 500},
+                {"role": "assistant", "content": "old response" * 80},
+                {"role": "user", "content": "latest" * 100},
+            ],
+            "system prompt",
+            max_output_tokens=16,
+        )
+        sent = backend.call_args.args[0]
+        estimated_total = (
+            sum(
+                maya_loader.estimate_tokens(message["content"])
+                + maya_loader.MESSAGE_OVERHEAD_TOKENS
+                for message in sent
+            )
+            + 16
+        )
+        self.assertLessEqual(estimated_total, 220)
+        self.assertEqual(sent[0], {"role": "system", "content": "system prompt"})
+        self.assertTrue(any(message["role"] == "user" for message in result["messages"]))
+        self.assertEqual(result["content"], "A concise reply")
+        self.assertEqual(result["completion_tokens"], maya_loader.estimate_tokens("A concise reply"))
+
+    def test_system_prompt_overflow_is_rejected_before_backend_call(self):
+        backend = Mock(return_value="unused")
+        service = maya_loader.MayaTurnService(
+            model="test-model", backend="openai", max_context=200,
+            max_output_tokens=32, chat_fn=backend,
+        )
+        with self.assertRaises(maya_loader.TurnContextError):
+            service.complete([{"role": "user", "content": "hi"}], "x" * 1000)
+        backend.assert_not_called()
+
+
 class MemoryTests(unittest.TestCase):
     def setUp(self):
         self.temp_dir = tempfile.TemporaryDirectory()
@@ -100,6 +142,16 @@ class MemoryTests(unittest.TestCase):
         self.assertEqual(self.memory.get_mood(), maya_loader.DEFAULT_MOOD)
         log_count = self.memory.conn.execute("SELECT COUNT(*) FROM conversation_log").fetchone()[0]
         self.assertEqual(log_count, 0)
+
+    def test_clear_all_removes_logged_content_from_database_and_wal_files(self):
+        private_text = "private-copy-marker-9c70d4f8"
+        self.memory.save_memory(private_text)
+        self.memory.log_message("user", private_text)
+        self.memory.clear_all()
+        for suffix in ("", "-wal", "-shm"):
+            candidate = Path(self.db_path + suffix)
+            if candidate.exists():
+                self.assertNotIn(private_text.encode("utf-8"), candidate.read_bytes())
 
     def test_empty_memory_is_rejected(self):
         with self.assertRaises(ValueError):
@@ -146,6 +198,34 @@ class InteractiveMemoryControlTests(unittest.TestCase):
             )
         self.assertFalse(Path(self.db_path).exists())
 
+    def test_forget_all_clears_live_turn_history_and_logged_copies(self):
+        private_text = "never-repeat-this-private-detail"
+        backend = Mock(return_value="okay")
+        commands = [private_text, ":forget all", "a fresh topic", "quit"]
+        with patch("builtins.input", side_effect=commands), patch("builtins.print"):
+            with patch.object(maya_loader, "chat_openai", backend):
+                maya_loader.run_interactive(
+                    "test-model", backend="openai", prompt_mode="lean",
+                    max_context=8192, max_output_tokens=128,
+                    memory_db=self.db_path, log_conversations=True,
+                )
+        self.assertEqual(backend.call_count, 2)
+        self.assertNotIn(
+            private_text,
+            json.dumps(backend.call_args_list[1].args[0]),
+        )
+        memory = maya_loader.MayaMemory(self.db_path)
+        try:
+            logged_content = [
+                row[0] for row in memory.conn.execute(
+                    "SELECT content FROM conversation_log"
+                ).fetchall()
+            ]
+            self.assertNotIn(private_text, logged_content)
+            self.assertEqual(logged_content, ["a fresh topic", "okay"])
+        finally:
+            memory.close()
+
 
 class BackendTests(unittest.TestCase):
     def test_openai_non_streaming_url_timeout_and_token_limit(self):
@@ -188,6 +268,31 @@ class BackendTests(unittest.TestCase):
                 )
         self.assertEqual(result, "hi there")
         response.close.assert_called_once()
+
+
+class ApiBindTests(unittest.TestCase):
+    def test_loopback_addresses_are_allowed_but_wider_binds_are_rejected(self):
+        for host in ("127.0.0.1", "::1", "localhost"):
+            self.assertEqual(maya_loader._validate_loopback_host(host), host)
+        for host in ("0.0.0.0", "192.168.1.10", "example.com", ""):
+            with self.subTest(host=host):
+                with self.assertRaises(ValueError):
+                    maya_loader._validate_loopback_host(host)
+
+    def test_cli_rejects_wide_api_bind_before_starting_server(self):
+        with patch.object(maya_loader, "start_api_server") as start:
+            with patch("sys.stderr"):
+                with self.assertRaises(SystemExit):
+                    maya_loader.main(["--api", "--api-host", "0.0.0.0"])
+        start.assert_not_called()
+
+    def test_server_start_rejects_wide_bind_before_creating_app(self):
+        with patch.object(maya_loader, "create_api_app") as create_app:
+            with self.assertRaises(ValueError):
+                maya_loader.start_api_server(
+                    "test-model", "openai", host="0.0.0.0"
+                )
+        create_app.assert_not_called()
 
 
 @unittest.skipUnless(importlib.util.find_spec("flask"), "Flask is optional")
@@ -233,6 +338,19 @@ class ApiTests(unittest.TestCase):
             "/v1/chat/completions", json={"messages": [{"role": "tool", "content": "x"}]}
         )
         self.assertEqual(response.status_code, 400)
+
+    def test_oversized_client_system_text_is_rejected_by_shared_context_budget(self):
+        response = self.client.post(
+            "/v1/chat/completions",
+            json={
+                "messages": [
+                    {"role": "system", "content": "system " * 10000},
+                    {"role": "user", "content": "hello"},
+                ]
+            },
+        )
+        self.assertEqual(response.status_code, 400)
+        self.backend.assert_not_called()
 
     def test_backend_failure_maps_to_502(self):
         self.backend.side_effect = requests.Timeout("backend timed out")

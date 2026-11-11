@@ -102,9 +102,9 @@ python loaders/maya_loader.py --backend openai --url http://localhost:1234/v1 --
 
 The default `--prompt auto` chooses a prompt that fits `--max-context` (8192 by default), including the response reserve. The compiled prompt is about 64,900 estimated tokens; use `--prompt full` only with a suitably large context. Use `--prompt lean` or `--prompt base` to choose smaller variants directly.
 
-Interactive memory is explicit: use `:remember <note>`, `:memories`, `:forget <id>`, or `:forget all`. Raw conversation logging is off by default. Pass `--no-memory` to avoid using SQLite memory, or `--log-conversations` to opt in to transcript storage.
+Interactive memory is explicit: use `:remember <note>`, `:memories`, `:forget <id>`, or `:forget all`; turns are never automatically promoted to saved memories. Raw conversation logging is off by default. Pass `--no-memory` to avoid using SQLite memory, or `--log-conversations` to opt in to transcript storage. `:forget all` clears saved notes, mood, logged transcripts, and the active chat history; SQLite pages are checkpointed and vacuumed, but this cannot erase separate backups or filesystem/storage snapshots.
 
-To build/check the full prompt, run `python maya_build.py` or `python maya_build.py --check`. For the optional local API server, install `python -m pip install -r requirements-api.txt` and add `--api`; it binds to `127.0.0.1` by default and does not persist API conversations.
+Interactive chat and the optional OpenAI-style API use the same channel-neutral turn service and total-context budget. To build/check the full prompt, run `python maya_build.py` or `python maya_build.py --check`. For the local API server, install `python -m pip install -r requirements-api.txt` and add `--api`; API requests remain stateless and are not written to SQLite. Because the API has no authentication yet, it only accepts loopback bind addresses (`localhost` or a loopback IP such as `127.0.0.1` or `::1`); wider binds such as `0.0.0.0` are rejected.
 
 See [`loaders/README.md`](loaders/README.md) for prompt sizing details, memory commands, API limits, and tests.
 
