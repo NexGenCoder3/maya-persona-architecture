@@ -49,11 +49,11 @@ While chatting, use:
 
 - `:remember <note>` to save a note deliberately.
 - `:memories` to inspect saved notes and their IDs.
-- `:forget <id>` to delete one note, redact its exact text from active history, and remove transcript rows containing it.
+- `:forget <id>` to delete one note and redact its exact text from active history and transcript rows, preserving surrounding text.
 - `:forget all` to delete all saved notes, transcript rows, and mood state in that profile database and clear the active chat history before the next turn.
 - `:help` to show the commands.
 
-Use `--no-memory` to avoid reading or writing the database for a session. Raw conversation turns can be stored only if you explicitly pass `--log-conversations`; do not combine that option with `--no-memory`. Choose another `--memory-db /path/to/profile.db` to use a separate profile. Forgetting a single note redacts its exact text from active history and removes transcript rows containing it; `:forget all` clears all saved state and active history. Both operations enable SQLite secure deletion, checkpoint/truncate its write-ahead log, and vacuum the database to remove deleted text from its database pages. This is best-effort cleanup of the active database, not erasure of backups, snapshots, or storage-device remanence. Back up or remove the database only after the loader has exited.
+Use `--no-memory` to avoid reading or writing the database for a session. Raw conversation turns can be stored only if you explicitly pass `--log-conversations`; do not combine that option with `--no-memory`. Choose another `--memory-db /path/to/profile.db` to use a separate profile. Forgetting a single note redacts its exact text from active history and transcript rows while preserving surrounding text; `:forget all` clears all saved state and active history. Both operations enable SQLite secure deletion, checkpoint/truncate its write-ahead log, and vacuum the database to remove deleted text from its database pages. This is best-effort cleanup of the active database, not erasure of backups, snapshots, or storage-device remanence. Back up or remove the database only after the loader has exited.
 
 ## Local API mode
 

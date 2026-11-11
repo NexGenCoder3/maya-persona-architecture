@@ -252,7 +252,9 @@ class MayaMemory:
         with self.conn:
             self.conn.execute("DELETE FROM long_term_memory WHERE id = ?", (memory_id,))
             self.conn.execute(
-                "DELETE FROM conversation_log WHERE instr(content, ?) > 0", (content,)
+                "UPDATE conversation_log SET content = replace(content, ?, '[forgotten]') "
+                "WHERE instr(content, ?) > 0",
+                (content, content),
             )
         self._reclaim_deleted_content()
         return True

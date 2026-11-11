@@ -155,7 +155,15 @@ class MemoryTests(unittest.TestCase):
         rows = self.memory.conn.execute(
             "SELECT content FROM conversation_log ORDER BY id"
         ).fetchall()
-        self.assertEqual(rows, [("Unrelated transcript row",)])
+        self.assertEqual(
+            rows,
+            [
+                ("Earlier I mentioned [forgotten].",),
+                ("[forgotten]",),
+                ("Unrelated transcript row",),
+            ],
+        )
+        self.assertIn("Unrelated transcript row", json.dumps(rows))
         for suffix in ("", "-wal", "-shm"):
             candidate = Path(self.db_path + suffix)
             if candidate.exists():
@@ -278,7 +286,12 @@ class InteractiveMemoryControlTests(unittest.TestCase):
             self.assertNotIn(private_text, json.dumps(logged_content))
             self.assertEqual(
                 logged_content,
-                ["What time is the meeting?", "The meeting is Friday at 3."],
+                [
+                    "The private note is [forgotten]. The meeting is Friday at 3.",
+                    "[forgotten]",
+                    "What time is the meeting?",
+                    "The meeting is Friday at 3.",
+                ],
             )
         finally:
             memory.close()
