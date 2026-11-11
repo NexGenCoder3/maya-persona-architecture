@@ -237,14 +237,17 @@ class MayaMemory:
     def get_recent_memories(self, limit=5):
         return [item["content"] for item in self.list_memories(limit)]
 
+    def get_memory_content(self, memory_id):
+        row = self.conn.execute(
+            "SELECT content FROM long_term_memory WHERE id = ?", (int(memory_id),)
+        ).fetchone()
+        return row[0] if row else None
+
     def delete_memory(self, memory_id):
         memory_id = int(memory_id)
-        row = self.conn.execute(
-            "SELECT content FROM long_term_memory WHERE id = ?", (memory_id,)
-        ).fetchone()
-        if row is None:
+        content = self.get_memory_content(memory_id)
+        if content is None:
             return False
-        content = row[0]
         self.conn.execute("PRAGMA secure_delete = ON")
         with self.conn:
             self.conn.execute("DELETE FROM long_term_memory WHERE id = ?", (memory_id,))
@@ -716,7 +719,7 @@ def _print_memory_help():
     print("Memory commands: :remember <note>, :memories, :forget <id>, :forget all, :help")
 
 
-def _handle_memory_command(text, memory, memory_enabled, memory_items):
+def _handle_memory_command(text, memory, memory_enabled, memory_items, messages=None):
     """Handle a local memory command; return True when input was consumed."""
     if text == ":help":
         _print_memory_help()
@@ -760,8 +763,14 @@ def _handle_memory_command(text, memory, memory_enabled, memory_items):
             except ValueError:
                 print("Usage: :forget <id> or :forget all")
             else:
-                if memory.delete_memory(memory_id):
+                forgotten = memory.get_memory_content(memory_id)
+                if forgotten is not None and memory.delete_memory(memory_id):
                     memory_items[:] = memory.get_recent_memories()
+                    for message in messages or []:
+                        if isinstance(message, dict) and isinstance(message.get("content"), str):
+                            message["content"] = message["content"].replace(
+                                forgotten, "[forgotten]"
+                            )
                     print("Forgot memory #{}.".format(memory_id))
                 else:
                     print("No saved memory with that id.")
@@ -799,7 +808,7 @@ def run_interactive(model, backend="ollama", url=None, prompt_mode="auto",
             model, backend, max_context, max_output_tokens
         ))
         print("Type 'quit' to exit. Use :help for memory commands.\n")
-        messages = list(MAYA_EXAMPLES)
+        messages = [dict(message) for message in MAYA_EXAMPLES]
 
         while True:
             try:
@@ -812,7 +821,7 @@ def run_interactive(model, backend="ollama", url=None, prompt_mode="auto",
             if not user_input:
                 continue
             if user_input.startswith(":") and _handle_memory_command(
-                    user_input, memory, memory_enabled, memory_items):
+                    user_input, memory, memory_enabled, memory_items, messages):
                 if user_input == ":forget all":
                     mood = None
                     messages.clear()

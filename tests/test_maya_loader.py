@@ -244,6 +244,45 @@ class InteractiveMemoryControlTests(unittest.TestCase):
         finally:
             memory.close()
 
+    def test_forget_one_redacts_active_history_and_preserves_unrelated_context(self):
+        private_text = "forget-this-specific-memory-8c2e"
+        memory = maya_loader.MayaMemory(self.db_path)
+        memory_id = memory.save_memory(private_text)
+        memory.close()
+        backend = Mock(side_effect=[private_text, "The meeting is Friday at 3."])
+        commands = [
+            "The private note is {}. The meeting is Friday at 3.".format(private_text),
+            ":forget {}".format(memory_id),
+            "What time is the meeting?",
+            "quit",
+        ]
+        with patch("builtins.input", side_effect=commands), patch("builtins.print"):
+            with patch.object(maya_loader, "chat_openai", backend):
+                maya_loader.run_interactive(
+                    "test-model", backend="openai", prompt_mode="lean",
+                    max_context=8192, max_output_tokens=128,
+                    memory_db=self.db_path, log_conversations=True,
+                )
+
+        self.assertEqual(backend.call_count, 2)
+        next_request = json.dumps(backend.call_args_list[1].args[0])
+        self.assertNotIn(private_text, next_request)
+        self.assertIn("The meeting is Friday at 3.", next_request)
+        memory = maya_loader.MayaMemory(self.db_path)
+        try:
+            logged_content = [
+                row[0] for row in memory.conn.execute(
+                    "SELECT content FROM conversation_log ORDER BY id"
+                ).fetchall()
+            ]
+            self.assertNotIn(private_text, json.dumps(logged_content))
+            self.assertEqual(
+                logged_content,
+                ["What time is the meeting?", "The meeting is Friday at 3."],
+            )
+        finally:
+            memory.close()
+
 
 class BackendTests(unittest.TestCase):
     def test_openai_non_streaming_url_timeout_and_token_limit(self):
