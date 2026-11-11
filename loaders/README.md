@@ -49,11 +49,11 @@ While chatting, use:
 
 - `:remember <note>` to save a note deliberately.
 - `:memories` to inspect saved notes and their IDs.
-- `:forget <id>` to delete one note.
+- `:forget <id>` to delete one note and transcript rows containing that exact note text.
 - `:forget all` to delete all saved notes, transcript rows, and mood state in that profile database and clear the active chat history before the next turn.
 - `:help` to show the commands.
 
-Use `--no-memory` to avoid reading or writing the database for a session. Raw conversation turns can be stored only if you explicitly pass `--log-conversations`; do not combine that option with `--no-memory`. Choose another `--memory-db /path/to/profile.db` to use a separate profile. `:forget all` enables SQLite secure deletion, checkpoints/truncates its write-ahead log, and vacuums the database to remove deleted text from its database pages. This is best-effort cleanup of the active database, not erasure of backups, snapshots, or storage-device remanence. Back up or remove the database only after the loader has exited.
+Use `--no-memory` to avoid reading or writing the database for a session. Raw conversation turns can be stored only if you explicitly pass `--log-conversations`; do not combine that option with `--no-memory`. Choose another `--memory-db /path/to/profile.db` to use a separate profile. Forgetting a single note removes transcript rows containing the exact note text; `:forget all` clears all saved state. Both operations enable SQLite secure deletion, checkpoint/truncate its write-ahead log, and vacuum the database to remove deleted text from its database pages. This is best-effort cleanup of the active database, not erasure of backups, snapshots, or storage-device remanence. Back up or remove the database only after the loader has exited.
 
 ## Local API mode
 

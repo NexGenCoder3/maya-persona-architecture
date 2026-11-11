@@ -238,9 +238,26 @@ class MayaMemory:
         return [item["content"] for item in self.list_memories(limit)]
 
     def delete_memory(self, memory_id):
+        memory_id = int(memory_id)
+        row = self.conn.execute(
+            "SELECT content FROM long_term_memory WHERE id = ?", (memory_id,)
+        ).fetchone()
+        if row is None:
+            return False
+        content = row[0]
+        self.conn.execute("PRAGMA secure_delete = ON")
         with self.conn:
-            cursor = self.conn.execute("DELETE FROM long_term_memory WHERE id = ?", (int(memory_id),))
-        return cursor.rowcount > 0
+            self.conn.execute("DELETE FROM long_term_memory WHERE id = ?", (memory_id,))
+            self.conn.execute(
+                "DELETE FROM conversation_log WHERE instr(content, ?) > 0", (content,)
+            )
+        self._reclaim_deleted_content()
+        return True
+
+    def _reclaim_deleted_content(self):
+        self.conn.execute("PRAGMA wal_checkpoint(TRUNCATE)")
+        self.conn.execute("VACUUM")
+        self.conn.execute("PRAGMA wal_checkpoint(TRUNCATE)")
 
     def clear_all(self):
         """Forget profile data and reclaim SQLite copies of deleted content.
@@ -254,9 +271,7 @@ class MayaMemory:
             self.conn.execute("DELETE FROM long_term_memory")
             self.conn.execute("DELETE FROM conversation_log")
             self.conn.execute("DELETE FROM mood_state")
-        self.conn.execute("PRAGMA wal_checkpoint(TRUNCATE)")
-        self.conn.execute("VACUUM")
-        self.conn.execute("PRAGMA wal_checkpoint(TRUNCATE)")
+        self._reclaim_deleted_content()
 
     def set_mood(self, mood_dict):
         if not isinstance(mood_dict, dict):

@@ -143,6 +143,24 @@ class MemoryTests(unittest.TestCase):
         log_count = self.memory.conn.execute("SELECT COUNT(*) FROM conversation_log").fetchone()[0]
         self.assertEqual(log_count, 0)
 
+    def test_delete_memory_removes_logged_copies_but_keeps_unrelated_rows(self):
+        private_text = "private-memory-marker-4a21"
+        memory_id = self.memory.save_memory(private_text)
+        self.memory.log_message("user", "Earlier I mentioned " + private_text + ".")
+        self.memory.log_message("assistant", private_text)
+        self.memory.log_message("user", "Unrelated transcript row")
+
+        self.assertTrue(self.memory.delete_memory(memory_id))
+        self.assertEqual(self.memory.list_memories(), [])
+        rows = self.memory.conn.execute(
+            "SELECT content FROM conversation_log ORDER BY id"
+        ).fetchall()
+        self.assertEqual(rows, [("Unrelated transcript row",)])
+        for suffix in ("", "-wal", "-shm"):
+            candidate = Path(self.db_path + suffix)
+            if candidate.exists():
+                self.assertNotIn(private_text.encode("utf-8"), candidate.read_bytes())
+
     def test_clear_all_removes_logged_content_from_database_and_wal_files(self):
         private_text = "private-copy-marker-9c70d4f8"
         self.memory.save_memory(private_text)
