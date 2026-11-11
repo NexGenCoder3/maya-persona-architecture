@@ -588,10 +588,63 @@ def _validate_api_messages(raw_messages):
     return system_parts, conversation
 
 
+class MayaReportConflictError(ValueError):
+    """Raised when an idempotency key is reused for a different report."""
+
+
+class MayaReportStore:
+    """Store only reports explicitly submitted by the local client."""
+    def __init__(self, path):
+        self.path = Path(path)
+
+    @staticmethod
+    def _validate_id(value, label):
+        if (not isinstance(value, str) or not 1 <= len(value) <= 160 or
+                not all(char.isascii() and (char.isalnum() or char in "-_") for char in value)):
+            raise ValueError("{} must be a short alphanumeric identifier".format(label))
+        return value
+
+    def submit(self, report_id, session_id, message_id, category, content):
+        report_id = self._validate_id(report_id, "report_id")
+        session_id = self._validate_id(session_id, "session_id")
+        message_id = self._validate_id(message_id, "message_id")
+        if category != "offensive_output":
+            raise ValueError("category must be offensive_output")
+        if not isinstance(content, str) or not content.strip() or len(content) > 4000:
+            raise ValueError("content must contain 1 to 4000 characters")
+        self.path.parent.mkdir(parents=True, exist_ok=True)
+        with sqlite3.connect(str(self.path), timeout=5) as conn:
+            conn.execute("PRAGMA secure_delete = ON")
+            conn.execute("BEGIN IMMEDIATE")
+            conn.execute(
+                "CREATE TABLE IF NOT EXISTS reports ("
+                "report_id TEXT PRIMARY KEY, session_id TEXT NOT NULL, "
+                "message_id TEXT NOT NULL, category TEXT NOT NULL, "
+                "content TEXT NOT NULL, created_at TEXT NOT NULL)"
+            )
+            payload = (session_id, message_id, category, content.strip())
+            existing = conn.execute(
+                "SELECT session_id, message_id, category, content FROM reports WHERE report_id = ?",
+                (report_id,),
+            ).fetchone()
+            if existing is not None:
+                if existing != payload:
+                    raise MayaReportConflictError("report_id is already used for a different report")
+                return False
+            conn.execute(
+                "INSERT INTO reports "
+                "(report_id, session_id, message_id, category, content, created_at) "
+                "VALUES (?, ?, ?, ?, ?, ?)",
+                (report_id, *payload, datetime.now(timezone.utc).isoformat()),
+            )
+            return True
+
+
 def create_api_app(model="mistral-small", backend="ollama", url=None,
                    max_context=DEFAULT_MAX_CONTEXT,
                    max_output_tokens=DEFAULT_MAX_OUTPUT_TOKENS,
-                   prompt_mode="auto", timeout=DEFAULT_TIMEOUT):
+                   prompt_mode="auto", timeout=DEFAULT_TIMEOUT,
+                   reports_db_path=None):
     """Create a Flask app for local, non-streaming OpenAI-style requests."""
     from flask import Flask, jsonify, request as flask_request
 
@@ -613,6 +666,7 @@ def create_api_app(model="mistral-small", backend="ollama", url=None,
     )
     app = Flask(__name__)
     app.config["MAX_CONTENT_LENGTH"] = 2 * 1024 * 1024
+    report_store = MayaReportStore(reports_db_path or BASE_DIR / "maya_reports.db")
 
     @app.route("/v1/chat/completions", methods=["POST"])
     def chat():
@@ -667,6 +721,34 @@ def create_api_app(model="mistral-small", backend="ollama", url=None,
             },
         }
         return jsonify(result)
+
+    @app.route("/v1/reports", methods=["POST"])
+    def submit_report():
+        try:
+            is_loopback = ipaddress.ip_address(flask_request.remote_addr or "").is_loopback
+        except ValueError:
+            is_loopback = False
+        if not is_loopback:
+            return jsonify(_api_error("Report intake is available only over loopback", "forbidden")), 403
+        data = flask_request.get_json(silent=True)
+        if not isinstance(data, dict):
+            return jsonify(_api_error("Request body must be a JSON object")), 400
+        try:
+            inserted = report_store.submit(
+                report_id=data.get("report_id"),
+                session_id=data.get("session_id"),
+                message_id=data.get("message_id"),
+                category=data.get("category"),
+                content=data.get("content"),
+            )
+        except MayaReportConflictError as exc:
+            return jsonify(_api_error(str(exc), "report_conflict")), 409
+        except ValueError as exc:
+            return jsonify(_api_error(str(exc))), 400
+        except sqlite3.Error:
+            app.logger.exception("Report submission could not be stored")
+            return jsonify(_api_error("The report could not be stored", "report_error")), 500
+        return jsonify({"accepted": True, "duplicate": not inserted}), 202
 
     @app.route("/health", methods=["GET"])
     def health():

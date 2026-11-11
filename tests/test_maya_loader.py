@@ -1,5 +1,6 @@
 import importlib.util
 import json
+import sqlite3
 import tempfile
 import unittest
 from pathlib import Path
@@ -430,6 +431,70 @@ class ApiTests(unittest.TestCase):
             )
         self.assertEqual(response.status_code, 502)
         self.assertEqual(response.get_json()["error"]["type"], "backend_error")
+
+    def test_report_submission_is_validated_persisted_and_idempotent(self):
+        with tempfile.TemporaryDirectory() as directory:
+            app = maya_loader.create_api_app(
+                model="local-model", backend="openai", max_context=8192,
+                max_output_tokens=128, prompt_mode="lean",
+                reports_db_path=Path(directory) / "reports.db",
+            )
+            client = app.test_client()
+            report = {
+                "report_id": "report-assistant-123",
+                "session_id": "session-123",
+                "message_id": "assistant-123",
+                "category": "offensive_output",
+                "content": "A reply the user chose to flag.",
+            }
+            first = client.post("/v1/reports", json=report)
+            duplicate = client.post("/v1/reports", json=report)
+            conflict = client.post("/v1/reports", json={**report, "content": "Different content under the same ID."})
+            self.assertEqual(first.status_code, 202)
+            self.assertEqual(first.get_json(), {"accepted": True, "duplicate": False})
+            self.assertEqual(duplicate.status_code, 202)
+            self.assertEqual(duplicate.get_json(), {"accepted": True, "duplicate": True})
+            self.assertEqual(conflict.status_code, 409)
+            self.assertEqual(conflict.get_json()["error"]["type"], "report_conflict")
+            with sqlite3.connect(str(Path(directory) / "reports.db")) as conn:
+                rows = conn.execute(
+                    "SELECT report_id, session_id, message_id, category, content FROM reports"
+                ).fetchall()
+            self.assertEqual(rows, [(
+                "report-assistant-123", "session-123", "assistant-123",
+                "offensive_output", "A reply the user chose to flag.",
+            )])
+
+    def test_report_submission_rejects_non_loopback_clients_before_storage(self):
+        with tempfile.TemporaryDirectory() as directory:
+            reports_path = Path(directory) / "reports.db"
+            app = maya_loader.create_api_app(
+                model="local-model", backend="openai", max_context=8192,
+                max_output_tokens=128, prompt_mode="lean", reports_db_path=reports_path,
+            )
+            response = app.test_client().post(
+                "/v1/reports",
+                json={"report_id": "r1", "session_id": "s1", "message_id": "m1",
+                      "category": "offensive_output", "content": "flag"},
+                environ_overrides={"REMOTE_ADDR": "192.0.2.10"},
+            )
+            self.assertEqual(response.status_code, 403)
+            self.assertEqual(response.get_json()["error"]["type"], "forbidden")
+            self.assertFalse(reports_path.exists())
+
+    def test_report_rejects_invalid_category_and_oversized_content(self):
+        invalid_category = self.client.post(
+            "/v1/reports",
+            json={"report_id": "r1", "session_id": "s1", "message_id": "m1",
+                  "category": "other", "content": "flag"},
+        )
+        too_long = self.client.post(
+            "/v1/reports",
+            json={"report_id": "r2", "session_id": "s1", "message_id": "m1",
+                  "category": "offensive_output", "content": "x" * 4001},
+        )
+        self.assertEqual(invalid_category.status_code, 400)
+        self.assertEqual(too_long.status_code, 400)
 
 
 if __name__ == "__main__":

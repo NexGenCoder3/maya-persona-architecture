@@ -6,3 +6,6 @@ venv/
 maya_memory.db
 maya_memory.db-shm
 maya_memory.db-wal
+maya_reports.db
+maya_reports.db-shm
+maya_reports.db-wal
